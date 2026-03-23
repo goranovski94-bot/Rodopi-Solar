@@ -71,12 +71,14 @@
     function closeMenu() {
       nav.classList.remove('open');
       burger.classList.remove('active');
+      burger.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
     }
 
     burger.addEventListener('click', function () {
       const open = nav.classList.toggle('open');
       burger.classList.toggle('active', open);
+      burger.setAttribute('aria-expanded', String(open));
       document.body.style.overflow = open ? 'hidden' : '';
     });
 
@@ -93,7 +95,8 @@
     // Close menu on nav link click
     nav.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () {
-        if (!a.closest('.nav__item--dropdown')) {
+        const isDropdownToggle = a.matches('.nav__item--dropdown > a');
+        if (!isDropdownToggle) {
           closeMenu();
         }
       });
@@ -235,7 +238,7 @@
 
   /* ---- Intersection Observer – fade-in on scroll ---- */
   const animatedElements = document.querySelectorAll(
-    '.benefit-card, .catalog-card, .portfolio-item, .info-card, .why-solar__image, .why-solar__text'
+    '.benefit-card, .catalog-card, .portfolio-item, .why-solar__image, .why-solar__text'
   );
 
   if (animatedElements.length) {

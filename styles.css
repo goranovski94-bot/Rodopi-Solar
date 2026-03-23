@@ -112,6 +112,14 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .btn--sm { padding: .55rem 1.2rem; font-size: .85rem; }
 .btn--full { width: 100%; justify-content: center; }
 
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 /* ========================================================
    HEADER
    ======================================================== */
@@ -144,17 +152,6 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   align-items: center;
   gap: .4rem;
 }
-.header__social { display: flex; gap: .5rem; }
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  color: #CBD5E1;
-  transition: background var(--transition), color var(--transition);
-}
-.social-link:hover { background: var(--primary); color: var(--dark); }
 
 /* Main nav bar */
 .header__main { padding: .9rem 0; }
@@ -456,20 +453,6 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 }
 .why-solar__img-wrap:hover img { transform: scale(1.04); }
 
-.why-solar__badge {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  background: var(--primary);
-  color: var(--dark);
-  border-radius: var(--radius);
-  padding: 1rem 1.2rem;
-  text-align: center;
-  box-shadow: 0 4px 16px rgba(245,158,11,.4);
-}
-.badge-number { display: block; font-size: 2rem; font-weight: 800; line-height: 1; }
-.badge-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
-
 .why-solar__text .section__title { margin-bottom: 1.25rem; }
 .why-solar__desc { color: var(--text); margin-bottom: 1rem; }
 .why-solar__text .btn { margin-top: 1.5rem; }
@@ -703,45 +686,6 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .manufacturer-logo svg { width: 100%; height: auto; }
 
 /* ========================================================
-   INFO CARDS
-   ======================================================== */
-.info__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.info-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.info-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-
-.info-card__img { overflow: hidden; height: 200px; }
-.info-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
-.info-card:hover .info-card__img img { transform: scale(1.06); }
-
-.info-card__body { padding: 1.5rem; }
-.info-card__date { font-size: .78rem; color: var(--text-light); margin-bottom: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
-.info-card__body h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; line-height: 1.45; }
-
-.info-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  font-size: .82rem;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: .05em;
-  transition: gap var(--transition);
-}
-.info-card__link:hover { gap: .6rem; }
-
-/* ========================================================
    FOOTER
    ======================================================== */
 .footer { background: var(--dark); color: #94A3B8; }
@@ -763,19 +707,6 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .footer__brand .logo-name { color: var(--white); }
 .footer__brand .logo-tagline { color: #64748B; }
 .footer__desc { font-size: .88rem; line-height: 1.7; margin-bottom: 1.5rem; }
-
-.social-link--footer {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  color: #94A3B8;
-  font-size: .85rem;
-  transition: color var(--transition);
-  width: auto;
-  height: auto;
-  border-radius: 0;
-}
-.social-link--footer:hover { color: var(--primary); background: none; }
 
 .footer__col h4 {
   font-size: .9rem;
@@ -842,6 +773,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .cookie-banner.show { transform: translateY(0); }
 .cookie-banner a { color: var(--primary); }
 .cookie-banner__actions { display: flex; gap: .6rem; flex-shrink: 0; }
+.cookie-banner.show ~ .scroll-top { bottom: 6.75rem; }
 
 /* ========================================================
    SCROLL TOP
@@ -882,6 +814,10 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 @media (max-width: 768px) {
   :root { --header-h: 110px; }
   .section { padding: 3.5rem 0; }
+  .hero {
+    height: calc(100svh - var(--header-h));
+    min-height: 500px;
+  }
 
   .header__contact-bar { display: none; }
   .header__burger { display: flex; }
@@ -910,7 +846,6 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 
   .benefits__grid { grid-template-columns: 1fr; }
   .catalog__grid { grid-template-columns: repeat(2, 1fr); }
-  .info__grid { grid-template-columns: 1fr; }
   .portfolio__grid { grid-template-columns: 1fr 1fr; }
   .portfolio-item--featured { grid-column: span 2; }
 
@@ -922,10 +857,19 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 
 @media (max-width: 480px) {
   .hero__title { font-size: 1.8rem; }
+  .hero__sub { font-size: 1rem; margin-bottom: 1.4rem; }
+  .hero { min-height: 460px; }
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+    justify-content: center;
+  }
   .catalog__grid { grid-template-columns: 1fr; }
   .portfolio__grid { grid-template-columns: 1fr; }
   .portfolio-item--featured { grid-column: 1; }
   .cookie-banner { left: 1rem; right: 1rem; bottom: 1rem; }
+  .cookie-banner.show ~ .scroll-top { bottom: 7.25rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

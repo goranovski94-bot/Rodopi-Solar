@@ -124,10 +124,11 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ----- Статични файлове -----
-  let filePath = path.join(ROOT, pathname === '/' ? 'index.html' : pathname);
+  const requestPath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  let filePath = path.normalize(path.join(ROOT, requestPath));
 
   // Предотвратяване на path traversal
-  if (!filePath.startsWith(ROOT)) {
+  if (!filePath.startsWith(ROOT + path.sep) && filePath !== ROOT) {
     res.writeHead(403, { 'Content-Type': 'text/plain' });
     res.end('403 Forbidden');
     return;
