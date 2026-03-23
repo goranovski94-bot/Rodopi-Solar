@@ -1,0 +1,12 @@
+{
+  "name": "rodopi-solar",
+  "version": "1.0.0",
+  "description": "Rodopi Solar - Photovoltaic systems website",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": ["solar", "photovoltaic", "rodopi"],
+  "license": "ISC"
+}
