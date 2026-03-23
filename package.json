@@ -2,6 +2,7 @@
   "name": "rodopi-solar",
   "version": "1.0.0",
   "description": "Rodopi Solar - Photovoltaic systems website",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",
