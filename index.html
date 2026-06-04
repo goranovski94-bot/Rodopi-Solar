@@ -16,7 +16,7 @@
   <meta property="og:description" content="Проектиране, доставка и монтаж на качествени ФЕЦ системи за дома и бизнеса." />
   <meta property="og:image" content="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80" />
   <title>Rodopi Solar – Слънчевата енергия в сърцето на Родопите</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20260604-4" />
   <link rel="dns-prefetch" href="//images.unsplash.com" />
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,14 +30,14 @@
     <div class="header__top">
       <div class="container header__top-inner">
         <div class="header__contact-bar">
-          <span>
+          <a href="tel:+359898459205" aria-label="Обадете се на +359898459205">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2.84h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            +359 888 123 456
-          </span>
-          <span>
+            +359898459205
+          </a>
+          <a href="mailto:info@rodopi-solar.bg" aria-label="Изпратете имейл на info@rodopi-solar.bg">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             info@rodopi-solar.bg
-          </span>
+          </a>
         </div>
 
       </div>
@@ -45,30 +45,14 @@
 
     <div class="header__main">
       <div class="container header__main-inner">
-        <a href="index.html" class="header__logo">
-          <div class="logo-icon">
-            <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="30" r="14" fill="#F59E0B"/>
-              <line x1="30" y1="4" x2="30" y2="12" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="30" y1="48" x2="30" y2="56" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="4" y1="30" x2="12" y2="30" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="48" y1="30" x2="56" y2="30" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="11.5" y1="11.5" x2="17.2" y2="17.2" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="42.8" y1="42.8" x2="48.5" y2="48.5" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="48.5" y1="11.5" x2="42.8" y2="17.2" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              <line x1="17.2" y1="42.8" x2="11.5" y2="48.5" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="logo-text">
-            <span class="logo-name">Rodopi Solar</span>
-            <span class="logo-tagline">Фотоволтаични системи</span>
-          </div>
+        <a href="index.html" class="header__logo" aria-label="Rodopi Solar - Начало">
+          <img src="assets/viber_изображение_2026-06-04_21-31-29-205.jpg?v=20260604-4" alt="Rodopi Solar Logistic" class="brand-logo brand-logo--header" />
         </a>
 
         <nav class="header__nav" id="nav">
           <ul class="nav__list">
             <li class="nav__item nav__item--dropdown">
-              <a href="#">Продукти <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+              <a href="#catalog" id="productsToggle" aria-haspopup="true" aria-expanded="false">Продукти <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
               <ul class="nav__dropdown">
                 <li><a href="#systems">Хибридни ФЕЦ системи</a></li>
                 <li><a href="#systems">Системи за дома</a></li>
@@ -320,7 +304,7 @@
             </div>
             <div class="form-group">
               <label for="phone">Телефон</label>
-              <input type="tel" id="phone" name="phone" placeholder="+359 888 123 456" required autocomplete="tel" />
+              <input type="tel" id="phone" name="phone" placeholder="+359898459205" required autocomplete="tel" inputmode="tel" minlength="7" maxlength="20" />
             </div>
             <div class="form-group">
               <label for="email">Имейл</label>
@@ -448,24 +432,8 @@
       <div class="container footer__grid">
 
         <div class="footer__brand">
-          <a href="index.html" class="footer__logo">
-            <div class="logo-icon logo-icon--sm">
-              <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="30" cy="30" r="14" fill="#F59E0B"/>
-                <line x1="30" y1="4" x2="30" y2="12" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="30" y1="48" x2="30" y2="56" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="4" y1="30" x2="12" y2="30" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="48" y1="30" x2="56" y2="30" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="11.5" y1="11.5" x2="17.2" y2="17.2" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="42.8" y1="42.8" x2="48.5" y2="48.5" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="48.5" y1="11.5" x2="42.8" y2="17.2" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-                <line x1="17.2" y1="42.8" x2="11.5" y2="48.5" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="logo-text">
-              <span class="logo-name">Rodopi Solar</span>
-              <span class="logo-tagline">Фотоволтаични системи</span>
-            </div>
+          <a href="index.html" class="footer__logo" aria-label="Rodopi Solar - Начало">
+            <img src="assets/viber_изображение_2026-06-04_21-31-29-205.jpg?v=20260604-4" alt="Rodopi Solar Logistic" class="brand-logo brand-logo--footer" />
           </a>
           <p class="footer__desc">Слънчевата енергия в сърцето на Родопите. Проектиране, доставка и монтаж на качествени ФЕЦ системи за дома и бизнеса.</p>
         </div>
@@ -502,9 +470,9 @@
               </a>
             </li>
             <li>
-              <a href="tel:+359888123456">
+              <a href="tel:+359898459205">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 2.84h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                +359 888 123 456
+                +359898459205
               </a>
             </li>
           </ul>
@@ -538,6 +506,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
   </a>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260604-4"></script>
 </body>
 </html>

@@ -13,10 +13,12 @@
   const prev = document.getElementById('heroPrev');
   const next = document.getElementById('heroNext');
   const slider = document.getElementById('heroSlider');
+  const mobileBreakpoint = 768;
   let current = 0;
   let timer;
 
   function goTo(index) {
+    if (!slides.length || !dots.length) return;
     slides[current].classList.remove('active');
     dots[current].classList.remove('active');
     current = (index + slides.length) % slides.length;
@@ -26,6 +28,7 @@
 
   function startAutoplay() {
     if (prefersReducedMotion) return;
+    clearInterval(timer);
     timer = setInterval(function () { goTo(current + 1); }, 6000);
   }
 
@@ -68,10 +71,18 @@
   const nav    = document.getElementById('nav');
 
   if (burger && nav) {
+    const dropdownToggles = nav.querySelectorAll('.nav__item--dropdown > a');
+
     function closeMenu() {
       nav.classList.remove('open');
       burger.classList.remove('active');
       burger.setAttribute('aria-expanded', 'false');
+      nav.querySelectorAll('.nav__item--dropdown').forEach(function (item) {
+        item.classList.remove('open');
+      });
+      dropdownToggles.forEach(function (link) {
+        link.setAttribute('aria-expanded', 'false');
+      });
       document.body.style.overflow = '';
     }
 
@@ -83,11 +94,14 @@
     });
 
     // Mobile dropdown toggling
-    document.querySelectorAll('.nav__item--dropdown > a').forEach(function (link) {
+    dropdownToggles.forEach(function (link) {
+      link.setAttribute('aria-expanded', 'false');
       link.addEventListener('click', function (e) {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= mobileBreakpoint) {
           e.preventDefault();
-          link.parentElement.classList.toggle('open');
+          const parent = link.parentElement;
+          const isOpen = parent.classList.toggle('open');
+          link.setAttribute('aria-expanded', String(isOpen));
         }
       });
     });
@@ -109,7 +123,7 @@
     });
 
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > mobileBreakpoint) {
         closeMenu();
       }
     });
@@ -148,13 +162,29 @@
   const declineBtn = document.getElementById('cookieDecline');
   const COOKIE_KEY = 'rodopi_cookie_consent';
 
+  function getConsent() {
+    try {
+      return localStorage.getItem(COOKIE_KEY);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function setConsent(value) {
+    try {
+      localStorage.setItem(COOKIE_KEY, value);
+    } catch (_) {
+      // localStorage can be blocked by privacy settings; silently continue.
+    }
+  }
+
   if (banner) {
     function hideBanner() {
       banner.classList.remove('show');
       setTimeout(function () { banner.style.display = 'none'; }, 500);
     }
 
-    if (!localStorage.getItem(COOKIE_KEY)) {
+    if (!getConsent()) {
       setTimeout(function () { banner.classList.add('show'); }, 1500);
     } else {
       banner.style.display = 'none';
@@ -162,13 +192,13 @@
 
     if (acceptBtn) {
       acceptBtn.addEventListener('click', function () {
-        localStorage.setItem(COOKIE_KEY, 'accepted');
+        setConsent('accepted');
         hideBanner();
       });
     }
     if (declineBtn) {
       declineBtn.addEventListener('click', function () {
-        localStorage.setItem(COOKIE_KEY, 'declined');
+        setConsent('declined');
         hideBanner();
       });
     }
@@ -180,6 +210,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const btn = form.querySelector('button[type="submit"]');
+      if (!btn) return;
       const originalText = btn.textContent;
 
       const data = {
@@ -189,41 +220,55 @@
         message: document.getElementById('message').value.trim(),
       };
 
+      const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
+      const phoneIsValid = /^[0-9+()\s-]{7,20}$/.test(data.phone);
+
+      if (!emailIsValid || !phoneIsValid) {
+        btn.textContent = 'Проверете имейла и телефона.';
+        btn.style.background = '#ef4444';
+        btn.style.color = 'white';
+        setTimeout(function () {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 3500);
+        return;
+      }
+
       btn.textContent = 'Изпращане...';
       btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
 
       fetch('/api/contact', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify(data),
       })
-        .then(function (res) { return res.json(); })
-        .then(function (json) {
-          if (json.ok) {
-            btn.textContent = '✓ Изпратено! Ще се свържем с Вас скоро.';
-            btn.style.background = '#10b981';
-            btn.style.color = 'white';
-            form.reset();
-            setTimeout(function () {
-              btn.textContent = originalText;
-              btn.disabled = false;
-              btn.style.background = '';
-              btn.style.color = '';
-            }, 5000);
-          } else {
-            btn.textContent = json.error || 'Грешка – опитайте пак.';
-            btn.style.background = '#ef4444';
-            btn.style.color = 'white';
-            btn.disabled = false;
-            setTimeout(function () {
-              btn.textContent = originalText;
-              btn.style.background = '';
-              btn.style.color = '';
-            }, 4000);
-          }
+        .then(function (res) {
+          return res.json()
+            .catch(function () { return {}; })
+            .then(function (json) {
+              if (!res.ok || !json.ok) {
+                throw new Error(json.error || 'Грешка – опитайте пак.');
+              }
+              return json;
+            });
         })
-        .catch(function () {
-          btn.textContent = 'Мрежова грешка – опитайте пак.';
+        .then(function () {
+          btn.textContent = '✓ Изпратено! Ще се свържем с Вас скоро.';
+          btn.style.background = '#10b981';
+          btn.style.color = 'white';
+          form.reset();
+          setTimeout(function () {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.removeAttribute('aria-busy');
+          }, 5000);
+        })
+        .catch(function (err) {
+          btn.textContent = err.message || 'Мрежова грешка – опитайте пак.';
           btn.style.background = '#ef4444';
           btn.style.color = 'white';
           btn.disabled = false;
@@ -231,6 +276,7 @@
             btn.textContent = originalText;
             btn.style.background = '';
             btn.style.color = '';
+            btn.removeAttribute('aria-busy');
           }, 4000);
         });
     });

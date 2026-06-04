@@ -6,7 +6,6 @@
 const http = require('http');
 const fs   = require('fs');
 const path = require('path');
-const url  = require('url');
 
 const PORT    = process.env.PORT || 3000;
 const ROOT    = __dirname;
@@ -50,6 +49,14 @@ function sanitize(str) {
   return str.replace(/[<>"'`]/g, '').trim().slice(0, 500);
 }
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPhone(phone) {
+  return /^[0-9+()\s-]{7,20}$/.test(phone);
+}
+
 function serveFile(res, filePath) {
   const ext  = path.extname(filePath).toLowerCase();
   const mime = MIME[ext] || 'application/octet-stream';
@@ -62,15 +69,34 @@ function serveFile(res, filePath) {
     }
     res.writeHead(200, {
       'Content-Type': mime,
-      'Cache-Control': ext === '.html' ? 'no-cache' : 'max-age=3600',
+      'Cache-Control': 'no-store, must-revalidate',
     });
     res.end(data);
   });
 }
 
 const server = http.createServer(async (req, res) => {
-  const parsed   = url.parse(req.url, true);
-  const pathname = parsed.pathname;
+  const requestUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  let pathname;
+
+  try {
+    pathname = decodeURIComponent(requestUrl.pathname);
+  } catch (_) {
+    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end('400 Bad Request');
+    return;
+  }
+
+  if (pathname === '/api/contact' && req.method === 'OPTIONS') {
+    res.writeHead(204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
+    });
+    res.end();
+    return;
+  }
 
   // ----- API: Запиши контактното запитване -----
   if (pathname === '/api/contact' && req.method === 'POST') {
@@ -97,9 +123,20 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify({ ok: false, error: 'Попълнете задължителните полета.' }));
         return;
       }
+      if (!isValidEmail(entry.email) || !isValidPhone(entry.phone)) {
+        res.writeHead(400);
+        res.end(JSON.stringify({ ok: false, error: 'Невалиден имейл или телефон.' }));
+        return;
+      }
 
       // Прочети → добави → запиши
-      const existing = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      let existing = [];
+      try {
+        existing = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        if (!Array.isArray(existing)) existing = [];
+      } catch (_) {
+        existing = [];
+      }
       existing.push(entry);
       fs.writeFileSync(DATA_FILE, JSON.stringify(existing, null, 2), 'utf8');
 
