@@ -791,7 +791,6 @@ textarea:focus-visible {
 .cookie-banner.show { transform: translateY(0); }
 .cookie-banner a { color: var(--primary); }
 .cookie-banner__actions { display: flex; gap: .6rem; flex-shrink: 0; }
-.cookie-banner.show ~ .nav-back,
 .cookie-banner.show ~ .scroll-top { bottom: calc(6.75rem + env(safe-area-inset-bottom)); }
 
 /* ========================================================
@@ -816,41 +815,6 @@ textarea:focus-visible {
 .scroll-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
 .scroll-top svg { width: 20px; height: 20px; }
 .scroll-top:hover { background: var(--primary-dark); transform: translateY(-2px); }
-
-.nav-back {
-  position: fixed;
-  bottom: calc(1.5rem + env(safe-area-inset-bottom));
-  left: 1.5rem;
-  min-width: 108px;
-  height: 44px;
-  padding: 0 1rem;
-  background: rgba(15,23,42,.92);
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .45rem;
-  box-shadow: 0 8px 24px rgba(15,23,42,.2);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(16px);
-  transition: opacity var(--transition), visibility var(--transition), transform var(--transition), background var(--transition);
-  z-index: 9000;
-}
-.nav-back span {
-  font-size: .92rem;
-  font-weight: 600;
-  line-height: 1;
-}
-.nav-back svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-}
-.nav-back.show { opacity: 1; visibility: visible; transform: translateY(0); }
-.nav-back:hover { background: var(--dark); transform: translateY(-2px); }
 
 /* ========================================================
    RESPONSIVE
@@ -942,16 +906,10 @@ textarea:focus-visible {
     justify-content: center;
   }
   .scroll-top { right: 1rem; }
-  .nav-back {
-    left: 1rem;
-    min-width: 100px;
-    padding: 0 .9rem;
-  }
   .catalog__grid { grid-template-columns: 1fr; }
   .portfolio__grid { grid-template-columns: 1fr; }
   .portfolio-item--featured { grid-column: 1; }
   .cookie-banner { left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom)); }
-  .cookie-banner.show ~ .nav-back,
   .cookie-banner.show ~ .scroll-top { bottom: calc(7.25rem + env(safe-area-inset-bottom)); }
 }
 
