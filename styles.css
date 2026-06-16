@@ -295,6 +295,7 @@ textarea:focus-visible {
 .header__badge-inner {
   display: flex;
   gap: 0;
+  padding-left: clamp(8.5rem, 31vw, 19rem);
   overflow-x: auto;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -964,6 +965,7 @@ textarea:focus-visible {
   .header__main-inner { gap: .5rem; }
   .header__burger { padding: .3rem; }
   .header__badge-bar { padding: .45rem 0; }
+  .header__badge-inner { padding-left: 0; }
   .badge-link {
     padding: .32rem .9rem;
     font-size: .68rem;
