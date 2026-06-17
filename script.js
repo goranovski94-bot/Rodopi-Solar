@@ -177,17 +177,35 @@
     });
 
     // Dropdown toggling
+    let lastTouchDropdownToggle = 0;
+    function toggleDropdown(link, e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const state = getNavigationState();
+      const willOpen = !link.parentElement.classList.contains('open');
+
+      setDropdownState(willOpen);
+      if (state.menuOpen) {
+        updateHistoryState({ menuOpen: true, dropdownOpen: willOpen }, true);
+      }
+    }
+
     dropdownToggles.forEach(function (link) {
       link.setAttribute('aria-expanded', 'false');
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const state = getNavigationState();
-        const willOpen = !link.parentElement.classList.contains('open');
+      link.addEventListener('touchend', function (e) {
+        lastTouchDropdownToggle = Date.now();
+        toggleDropdown(link, e);
+      }, { passive: false });
 
-        setDropdownState(willOpen);
-        if (state.menuOpen) {
-          updateHistoryState({ menuOpen: true, dropdownOpen: willOpen }, true);
+      link.addEventListener('click', function (e) {
+        if (Date.now() - lastTouchDropdownToggle < 650) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
         }
+
+        toggleDropdown(link, e);
       });
     });
 

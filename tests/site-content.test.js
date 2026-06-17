@@ -94,9 +94,12 @@ assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio
 assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
 assert.match(html, /<footer class="footer" id="footer-contact">/, 'Contacts link must target the bottom footer contact area');
 assert.match(css, /\.quick-menu:focus-within \.nav__dropdown,\s*\.quick-menu\.open \.nav__dropdown/, 'Mobile products dropdown must open from the JS open state');
+assert.match(css, /\.quick-link--products\[aria-expanded="true"\] \+ \.nav__dropdown/, 'Products dropdown must also open from aria-expanded for touch devices');
+assert.match(css, /@media \(max-width: 1024px\)[\s\S]*\.header__quick-nav \{[\s\S]*overflow: visible;/, 'Quick nav must not clip the products dropdown on tablet and phone');
 assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__burger \{ display: none; \}/, 'Mobile burger menu must be hidden');
 assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__nav \{[\s\S]*position: static;/, 'Mobile About and Contacts links must remain visible beside the logo');
 assert.ok(js.includes('setDropdownState(false);\n        scrollToSection(targetSection);'), 'Product dropdown must close after selecting a section');
+assert.ok(js.includes("link.addEventListener('touchend'"), 'Products dropdown must listen for touchend on mobile devices');
 
 [
   'assets/products/hybrid-system-deye-lifepo4.jpg',
