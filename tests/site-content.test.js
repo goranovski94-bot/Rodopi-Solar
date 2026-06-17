@@ -107,6 +107,8 @@ assert.ok(js.includes("} else if (e.key === 'Escape') {\n        setDropdownStat
 assert.ok(html.includes("localStorage.getItem('rodopi_theme')"), 'Saved theme must be applied before CSS loads');
 assert.match(css, /:root\[data-theme="dark"\]/, 'Dark theme variables must exist');
 assert.match(css, /:root\[data-theme="dark"\] \.catalog-card--highlight,[\s\S]*:root\[data-theme="dark"\] \.portfolio\.section--gray/, 'Dark theme must cover fixed light catalog and portfolio backgrounds');
+assert.match(css, /\.header__logo \{[\s\S]*border: 1px solid rgba\(245,158,11,\.2\);/, 'Header logo must have a clear badge border');
+assert.match(css, /:root\[data-theme="dark"\] \.header__logo \{[\s\S]*border-color: rgba\(245,158,11,\.36\);/, 'Header logo must stay defined in dark mode');
 assert.match(css, /\.hero__content \{[\s\S]*color: #FFFFFF;/, 'Hero content must stay readable in dark mode');
 assert.match(css, /\.hero__title \{[\s\S]*color: #FFFFFF;/, 'Hero title must stay white over the image in dark mode');
 assert.match(css, /\.catalog__banner \{[\s\S]*color: #FFFFFF;/, 'Best-selling catalog banner must stay readable in dark mode');
@@ -129,9 +131,9 @@ assert.ok(js.includes('window.innerWidth > mobileBreakpoint ? true'), 'Desktop p
   'assets/products/photovoltaic-panels-roof.jpg',
   'assets/products/hybrid-system-deye-lifepo4.jpg',
   'assets/products/deye-hybrid-inverter.png',
+  'assets/products/deye-hybrid-inverter-clean.png',
   'assets/products/lifepo4-battery-cabinet.jpg',
-  'assets/products/hybrid-system-roof-installation.jpg',
-  'assets/products/inverter-protection-panel.jpg',
+  'assets/products/deye-system-scene-20kw.jpg',
   'assets/products/inverter-storage-installation.jpg',
 ].forEach((src) => {
   assert.ok(html.includes(src), `Missing product image: ${src}`);
@@ -164,17 +166,21 @@ portfolioImageSources.forEach((src) => {
   'assets/portfolio/solar-portfolio-18kw.jpg',
   'assets/portfolio/solar-portfolio-12kw-roof.jpg',
   'assets/portfolio/solar-portfolio-15kw.jpg',
-  'assets/portfolio/solar-portfolio-commercial-worker.jpg',
+  'assets/portfolio/solar-portfolio-bright-field.jpg',
   'assets/portfolio/solar-portfolio-field-closeup.jpg',
   'assets/portfolio/solar-portfolio-flat-roof.jpg',
   'assets/portfolio/solar-portfolio-home-roof.jpg',
-  'assets/portfolio/solar-portfolio-installers.jpg',
+  'assets/portfolio/solar-portfolio-aerial-panel-rows.jpg',
   'assets/portfolio/solar-portfolio-field-array.jpg',
   'assets/portfolio/solar-portfolio-residential-roof.jpg',
   'assets/portfolio/solar-portfolio-sunset-roof.jpg',
 ].forEach((src) => {
   assert.ok(portfolioMatch[1].includes(src), `Missing local portfolio image: ${src}`);
 });
+assert.ok(
+  !/portfolio\/[^"]*(worker|installer|people|person|human)[^"]*\.(jpg|png|webp)/i.test(portfolioMatch[1]),
+  'Portfolio images must not include people-focused filenames'
+);
 
 [
   ['DEYE', 'assets/logos/deye.png'],
@@ -190,6 +196,8 @@ portfolioImageSources.forEach((src) => {
 const manufacturersMatch = html.match(/<section class="manufacturers section"[^>]*>([\s\S]*?)<\/section>/);
 assert.ok(manufacturersMatch, 'Manufacturers section must exist');
 assert.ok(!manufacturersMatch[1].includes('<text'), 'Manufacturers logos must use image assets, not SVG text placeholders');
+assert.match(css, /:root\[data-theme="dark"\] \.brand-pills span,[\s\S]*:root\[data-theme="dark"\] \.manufacturer-logo \{[\s\S]*background: linear-gradient\(145deg, #FFFFFF/, 'Manufacturer logos must stay on a light logo card in dark mode');
+assert.match(css, /:root\[data-theme="dark"\] \.brand-pills img,[\s\S]*:root\[data-theme="dark"\] \.manufacturer-logo img \{[\s\S]*opacity: 1;/, 'Manufacturer logos must stay fully visible in dark mode');
 
 const panelBrandsMatch = html.match(/<div class="brand-pills"[^>]*>([\s\S]*?)<\/div>/);
 assert.ok(panelBrandsMatch, 'Panel brand logo list must exist');
