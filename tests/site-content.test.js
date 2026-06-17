@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
+const js = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
 const normalizedText = html
   .replace(/<[^>]+>/g, ' ')
   .replace(/\s+/g, ' ')
@@ -91,6 +93,10 @@ assert.ok(!productsDropdownMatch[1].includes('#portfolio'), 'Portfolio must not 
 assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio must not be a product catalog card');
 assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
 assert.match(html, /<footer class="footer" id="footer-contact">/, 'Contacts link must target the bottom footer contact area');
+assert.match(css, /\.quick-menu:focus-within \.nav__dropdown,\s*\.quick-menu\.open \.nav__dropdown/, 'Mobile products dropdown must open from the JS open state');
+assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__burger \{ display: none; \}/, 'Mobile burger menu must be hidden');
+assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__nav \{[\s\S]*position: static;/, 'Mobile About and Contacts links must remain visible beside the logo');
+assert.ok(js.includes('setDropdownState(false);\n        scrollToSection(targetSection);'), 'Product dropdown must close after selecting a section');
 
 [
   'assets/products/hybrid-system-deye-lifepo4.jpg',

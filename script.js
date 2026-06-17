@@ -280,6 +280,7 @@
           updateHistoryState({ section: targetSection, menuOpen: false, dropdownOpen: false }, false);
         }
 
+        setDropdownState(false);
         scrollToSection(targetSection);
       });
     });
