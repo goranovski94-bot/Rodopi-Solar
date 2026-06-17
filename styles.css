@@ -125,6 +125,11 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 :root[data-theme="dark"] .theme-toggle {
   color: #E2E8F0;
 }
+:root[data-theme="dark"] .quick-link--products,
+:root[data-theme="dark"] .quick-menu:hover > .quick-link--products,
+:root[data-theme="dark"] .quick-menu.open > .quick-link--products {
+  color: #0F172A;
+}
 :root[data-theme="dark"] .header__nav .nav__item > a,
 :root[data-theme="dark"] .theme-toggle,
 :root[data-theme="dark"] .nav__dropdown,
@@ -215,7 +220,7 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .btn--primary:hover { background: var(--primary-dark); }
 .btn--outline { background: transparent; color: var(--dark); border: 2px solid var(--primary); }
 .btn--outline:hover { background: var(--primary); }
-.btn--outline-white { background: transparent; color: var(--white); border: 2px solid var(--white); }
+.btn--outline-white { background: transparent; color: #FFFFFF; border: 2px solid #FFFFFF; }
 .btn--outline-white:hover { background: rgba(255,255,255,.15); }
 .btn--sm { padding: .55rem 1.2rem; font-size: .85rem; }
 .btn--full { width: 100%; justify-content: center; }
@@ -840,7 +845,7 @@ textarea:focus-visible {
 
 .catalog__banner {
   background: linear-gradient(135deg, var(--dark), var(--dark-2));
-  color: var(--white);
+  color: #FFFFFF;
   border-radius: var(--radius);
   padding: 1.2rem 2rem;
   display: flex;
@@ -984,8 +989,8 @@ textarea:focus-visible {
 /* ========================================================
    CONSULT CTA
    ======================================================== */
-.consult-cta { background: linear-gradient(135deg, var(--dark) 0%, #1a3a5e 100%); color: var(--white); }
-.consult-cta .section__title { color: var(--white); }
+.consult-cta { background: linear-gradient(135deg, var(--dark) 0%, #1a3a5e 100%); color: #FFFFFF; }
+.consult-cta .section__title { color: #FFFFFF; }
 
 .consult-cta__inner {
   display: grid;
@@ -997,6 +1002,7 @@ textarea:focus-visible {
 .consult-cta__text h2 {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 700;
+  color: #FFFFFF;
   margin-bottom: 1.25rem;
   line-height: 1.3;
 }
@@ -1013,7 +1019,7 @@ textarea:focus-visible {
   background: rgba(255,255,255,.08);
 }
 .consult-contact h3 {
-  color: var(--white);
+  color: #FFFFFF;
   font-size: 1rem;
   margin-bottom: .15rem;
 }

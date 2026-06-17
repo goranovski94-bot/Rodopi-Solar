@@ -287,6 +287,8 @@
           return;
         }
         closeMenu();
+      } else if (e.key === 'Escape') {
+        setDropdownState(false);
       }
     });
 

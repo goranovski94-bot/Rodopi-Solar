@@ -103,11 +103,18 @@ assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__burger \{ display
 assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__nav \{[\s\S]*position: static;/, 'Mobile About and Contacts links must remain visible beside the logo');
 assert.ok(js.includes('setDropdownState(false);\n        scrollToSection(targetSection);'), 'Product dropdown must close after selecting a section');
 assert.ok(js.includes("link.addEventListener('touchend'"), 'Products dropdown must listen for touchend on mobile devices');
+assert.ok(js.includes("} else if (e.key === 'Escape') {\n        setDropdownState(false);"), 'Escape must close the products dropdown');
 assert.ok(html.includes("localStorage.getItem('rodopi_theme')"), 'Saved theme must be applied before CSS loads');
 assert.match(css, /:root\[data-theme="dark"\]/, 'Dark theme variables must exist');
 assert.match(css, /:root\[data-theme="dark"\] \.catalog-card--highlight,[\s\S]*:root\[data-theme="dark"\] \.portfolio\.section--gray/, 'Dark theme must cover fixed light catalog and portfolio backgrounds');
 assert.match(css, /\.hero__content \{[\s\S]*color: #FFFFFF;/, 'Hero content must stay readable in dark mode');
 assert.match(css, /\.hero__title \{[\s\S]*color: #FFFFFF;/, 'Hero title must stay white over the image in dark mode');
+assert.match(css, /\.catalog__banner \{[\s\S]*color: #FFFFFF;/, 'Best-selling catalog banner must stay readable in dark mode');
+assert.match(css, /\.consult-cta \{[\s\S]*color: #FFFFFF;/, 'Consult section text must stay readable in dark mode');
+assert.match(css, /\.consult-cta__text h2 \{[\s\S]*color: #FFFFFF;/, 'Consult heading must stay readable in dark mode');
+assert.match(css, /\.consult-contact h3 \{[\s\S]*color: #FFFFFF;/, 'Consult contact heading must stay readable in dark mode');
+assert.match(css, /:root\[data-theme="dark"\] \.quick-link--products,[\s\S]*color: #0F172A;/, 'Products pill text must stay readable on orange in dark mode');
+assert.match(css, /\.btn--outline-white \{[\s\S]*color: #FFFFFF;[\s\S]*border: 2px solid #FFFFFF;/, 'White outline buttons must stay readable in dark mode');
 assert.match(css, /\.footer__col h4 \{[\s\S]*color: #F8FAFC;/, 'Footer headings must stay readable in dark mode');
 assert.match(css, /\.footer__hours strong \{[\s\S]*color: #FFFFFF;/, 'Footer working hours must stay readable in dark mode');
 assert.match(css, /\.footer__contact-link \{[\s\S]*background: rgba\(15,23,42,\.72\);/, 'Footer contact links must be highlighted as visible chips');
