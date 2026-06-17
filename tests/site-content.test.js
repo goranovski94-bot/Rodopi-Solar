@@ -105,9 +105,12 @@ assert.ok(js.includes("link.addEventListener('touchend'"), 'Products dropdown mu
 assert.ok(html.includes("localStorage.getItem('rodopi_theme')"), 'Saved theme must be applied before CSS loads');
 assert.match(css, /:root\[data-theme="dark"\]/, 'Dark theme variables must exist');
 assert.match(css, /:root\[data-theme="dark"\] \.catalog-card--highlight,[\s\S]*:root\[data-theme="dark"\] \.portfolio\.section--gray/, 'Dark theme must cover fixed light catalog and portfolio backgrounds');
+assert.match(css, /\.hero__content \{[\s\S]*color: #FFFFFF;/, 'Hero content must stay readable in dark mode');
+assert.match(css, /\.hero__title \{[\s\S]*color: #FFFFFF;/, 'Hero title must stay white over the image in dark mode');
 assert.match(css, /\.theme-toggle\[aria-pressed="true"\] \.theme-toggle__thumb/, 'Theme toggle must have an active visual state');
 assert.ok(js.includes("localStorage.setItem('rodopi_theme', nextTheme)"), 'Theme choice must be saved');
 assert.ok(js.includes("themeToggle.addEventListener('click'"), 'Theme toggle must respond to clicks and taps');
+assert.ok(js.includes('window.innerWidth > mobileBreakpoint ? true'), 'Desktop products click must keep the dropdown open after hover');
 
 [
   'assets/products/photovoltaic-panels-closeup.jpg',
@@ -122,6 +125,8 @@ assert.ok(js.includes("themeToggle.addEventListener('click'"), 'Theme toggle mus
 const portfolioMatch = html.match(/<section class="portfolio section section--gray" id="portfolio">([\s\S]*?)<\/section>/);
 assert.ok(portfolioMatch, 'Portfolio section must exist');
 assert.ok(!portfolioMatch[1].includes('images.unsplash.com'), 'Portfolio must use local suitable project images');
+assert.ok(!portfolioMatch[1].includes('assets/products/deye-hybrid-inverter.png'), 'Portfolio must not use product-only inverter imagery');
+assert.ok(!portfolioMatch[1].includes('assets/products/lifepo4-battery-cabinet.jpg'), 'Portfolio must not use product-only battery imagery');
 [
   'assets/portfolio/solar-portfolio-18kw.jpg',
   'assets/portfolio/solar-portfolio-12kw-roof.jpg',

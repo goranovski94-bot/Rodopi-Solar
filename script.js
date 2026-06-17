@@ -213,7 +213,7 @@
       e.stopPropagation();
 
       const state = getNavigationState();
-      const willOpen = !link.parentElement.classList.contains('open');
+      const willOpen = window.innerWidth > mobileBreakpoint ? true : !link.parentElement.classList.contains('open');
 
       setDropdownState(willOpen);
       if (state.menuOpen) {

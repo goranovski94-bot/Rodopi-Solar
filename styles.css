@@ -592,7 +592,7 @@ textarea:focus-visible {
   position: relative;
   z-index: 2;
   max-width: 780px;
-  color: var(--white);
+  color: #FFFFFF;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -643,6 +643,7 @@ textarea:focus-visible {
   font-size: clamp(1.9rem, 4.4vw, 3rem);
   font-weight: 800;
   line-height: 1.15;
+  color: #FFFFFF;
   margin-bottom: .9rem;
   opacity: 0;
   transform: translateY(24px);
