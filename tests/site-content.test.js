@@ -64,7 +64,7 @@ assert.strictEqual(
   /<a href="#systems" class="quick-link">Deye системи<\/a>/,
   /<a href="#batteries" class="quick-link">LiFePO4 батерии<\/a>/,
   /<a href="#portfolio" class="quick-link">Портфолио<\/a>/,
-  /<li class="nav__item"><a href="#contact">Контакти<\/a><\/li>/,
+  /<li class="nav__item"><a href="#footer-contact">Контакти<\/a><\/li>/,
   /<a href="#systems" class="btn btn--primary btn--sm">РАЗГЛЕДАЙ ТУК<\/a>/,
 ].forEach((pattern) => assert.match(html, pattern));
 
@@ -86,6 +86,7 @@ assert.ok(productsDropdownMatch, 'Products dropdown must exist');
 assert.ok(!productsDropdownMatch[1].includes('#portfolio'), 'Portfolio must not be listed in Products dropdown');
 assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio must not be a product catalog card');
 assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
+assert.match(html, /<footer class="footer" id="footer-contact">/, 'Contacts link must target the bottom footer contact area');
 
 [
   'assets/products/hybrid-system-deye-lifepo4.jpg',

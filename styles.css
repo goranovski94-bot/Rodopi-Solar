@@ -250,7 +250,8 @@ textarea:focus-visible {
   transition: background var(--transition), color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
 .quick-link:hover,
-.quick-menu:hover > .quick-link {
+.quick-menu:hover > .quick-link,
+.quick-menu.open > .quick-link {
   color: var(--dark);
   background: rgba(245,158,11,.18);
   box-shadow: inset 0 0 0 1px rgba(245,158,11,.28);
@@ -261,7 +262,8 @@ textarea:focus-visible {
   box-shadow: 0 8px 18px rgba(245,158,11,.26);
 }
 .quick-link--products:hover,
-.quick-menu:hover > .quick-link--products {
+.quick-menu:hover > .quick-link--products,
+.quick-menu.open > .quick-link--products {
   background: var(--primary-dark);
   color: var(--dark);
 }

@@ -191,6 +191,30 @@
       });
     });
 
+    dropdownItems.forEach(function (item) {
+      item.addEventListener('pointerenter', function () {
+        if (window.innerWidth <= mobileBreakpoint) return;
+        setDropdownState(true);
+      });
+
+      item.addEventListener('pointerleave', function () {
+        if (window.innerWidth <= mobileBreakpoint) return;
+        setDropdownState(false);
+      });
+
+      item.addEventListener('focusin', function () {
+        if (window.innerWidth <= mobileBreakpoint) return;
+        setDropdownState(true);
+      });
+
+      item.addEventListener('focusout', function (e) {
+        if (window.innerWidth <= mobileBreakpoint) return;
+        if (!item.contains(e.relatedTarget)) {
+          setDropdownState(false);
+        }
+      });
+    });
+
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.nav__item--dropdown')) {
         setDropdownState(false);
