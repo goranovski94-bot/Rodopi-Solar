@@ -1180,7 +1180,7 @@ textarea:focus-visible {
 .footer__col h4 {
   font-size: .9rem;
   font-weight: 700;
-  color: var(--white);
+  color: #F8FAFC;
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: .07em;
@@ -1194,9 +1194,43 @@ textarea:focus-visible {
   transition: color var(--transition);
 }
 .footer__col ul li a:hover { color: var(--primary); }
-.footer__hours { font-size: .88rem; line-height: 1.7; }
-.footer__hours strong { color: var(--white); }
+.footer__hours {
+  font-size: .92rem;
+  line-height: 1.7;
+  color: #CBD5E1;
+}
+.footer__hours strong {
+  display: inline-block;
+  margin-top: .2rem;
+  color: #FFFFFF;
+  font-size: 1.02rem;
+  font-weight: 800;
+}
 .footer__contact-title { margin-top: 1.5rem; }
+.footer__contact-list {
+  display: grid;
+  gap: .75rem;
+}
+.footer__contact-link {
+  min-height: 44px;
+  padding: .72rem .85rem;
+  border: 1px solid rgba(148,163,184,.24);
+  border-radius: var(--radius-sm);
+  background: rgba(15,23,42,.72);
+  color: #E2E8F0;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+.footer__contact-link svg {
+  flex: 0 0 auto;
+  color: var(--primary);
+}
+.footer__contact-link:hover {
+  border-color: rgba(245,158,11,.58);
+  background: rgba(245,158,11,.12);
+  color: #FFFFFF;
+}
 
 .footer__bottom {
   border-top: 1px solid rgba(255,255,255,.07);
@@ -1547,6 +1581,10 @@ textarea:focus-visible {
   .manufacturers__logos { grid-template-columns: 1fr; }
   .portfolio-item--featured { grid-column: 1; }
   .cookie-banner.show ~ .scroll-top { bottom: calc(7.25rem + env(safe-area-inset-bottom)); }
+  .footer__contact-link {
+    width: calc(100% - 4.8rem);
+    padding-right: .85rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

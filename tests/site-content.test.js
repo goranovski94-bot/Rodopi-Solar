@@ -37,8 +37,9 @@ function assertIncludes(value, message) {
 assertIncludes('rodopisolar@gmail.com', 'Contact email must be rodopisolar@gmail.com');
 assert.ok(!html.includes('href="mailto:rodopisolar@gmail.com"'), 'Email links must point to the free consultation section');
 assert.ok(!html.includes('href="tel:+359898459205"'), 'Phone links must point to the free consultation section');
-assert.ok(html.includes('<a href="#consult">+359898459205</a>'), 'Phone text must link to free consultation');
-assert.ok(html.includes('<a href="#consult">rodopisolar@gmail.com</a>'), 'Email text must link to free consultation');
+assert.match(html, /<a href="#consult"[^>]*>\+359898459205<\/a>/, 'Phone text must link to free consultation');
+assert.match(html, /<a href="#consult"[^>]*>rodopisolar@gmail.com<\/a>/, 'Email text must link to free consultation');
+assert.ok(html.includes('class="footer__contact-link"'), 'Footer contact links must use the emphasized contact style');
 assert.strictEqual(countText('Инвестирайте в устойчива енергия'), 1, 'Hero headline must appear once');
 assert.strictEqual(
   countText('Намалете сметките си за ток и осигурете енергийна независимост за години напред.'),
@@ -107,6 +108,10 @@ assert.match(css, /:root\[data-theme="dark"\]/, 'Dark theme variables must exist
 assert.match(css, /:root\[data-theme="dark"\] \.catalog-card--highlight,[\s\S]*:root\[data-theme="dark"\] \.portfolio\.section--gray/, 'Dark theme must cover fixed light catalog and portfolio backgrounds');
 assert.match(css, /\.hero__content \{[\s\S]*color: #FFFFFF;/, 'Hero content must stay readable in dark mode');
 assert.match(css, /\.hero__title \{[\s\S]*color: #FFFFFF;/, 'Hero title must stay white over the image in dark mode');
+assert.match(css, /\.footer__col h4 \{[\s\S]*color: #F8FAFC;/, 'Footer headings must stay readable in dark mode');
+assert.match(css, /\.footer__hours strong \{[\s\S]*color: #FFFFFF;/, 'Footer working hours must stay readable in dark mode');
+assert.match(css, /\.footer__contact-link \{[\s\S]*background: rgba\(15,23,42,\.72\);/, 'Footer contact links must be highlighted as visible chips');
+assert.match(css, /@media \(max-width: 480px\)[\s\S]*\.footer__contact-link \{[\s\S]*width: calc\(100% - 4\.8rem\);/, 'Footer contact links must avoid the floating scroll button on phones');
 assert.match(css, /\.theme-toggle\[aria-pressed="true"\] \.theme-toggle__thumb/, 'Theme toggle must have an active visual state');
 assert.ok(js.includes("localStorage.setItem('rodopi_theme', nextTheme)"), 'Theme choice must be saved');
 assert.ok(js.includes("themeToggle.addEventListener('click'"), 'Theme toggle must respond to clicks and taps');
