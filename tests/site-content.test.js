@@ -59,13 +59,18 @@ assert.strictEqual(
 });
 
 [
-  /<li class="nav__item"><a href="#systems">Deye системи<\/a><\/li>/,
-  /<li class="nav__item"><a href="#batteries">LiFePO4 батерии<\/a><\/li>/,
-  /<li class="nav__item"><a href="#portfolio">Портфолио<\/a><\/li>/,
+  /<div class="header__quick-nav" aria-label="Бърза навигация към продуктови секции">/,
+  /<a href="#systems" class="quick-link">Deye системи<\/a>/,
+  /<a href="#batteries" class="quick-link">LiFePO4 батерии<\/a>/,
+  /<a href="#portfolio" class="quick-link">Портфолио<\/a>/,
   /<li class="nav__item"><a href="#contact">Контакти<\/a><\/li>/,
-  /<li class="nav__item"><a href="#consult" class="nav__cta">Безплатна консултация<\/a><\/li>/,
   /<a href="#systems" class="btn btn--primary btn--sm">РАЗГЛЕДАЙ ТУК<\/a>/,
 ].forEach((pattern) => assert.match(html, pattern));
+
+const headerMatch = html.match(/<header class="header" id="header">([\s\S]*?)<\/header>/);
+assert.ok(headerMatch, 'Header must exist');
+assert.ok(!headerMatch[1].includes('Безплатна консултация'), 'Free consultation must not appear in the top header');
+assert.ok(!html.includes('hero__brand-name'), 'Hero must not show Rodopi Solar text above the headline');
 
 const productsDropdownMatch = html.match(/<ul class="nav__dropdown">([\s\S]*?)<\/ul>/);
 assert.ok(productsDropdownMatch, 'Products dropdown must exist');

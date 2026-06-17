@@ -49,21 +49,23 @@
           <img src="assets/rodopi-solar-logo-cropped.webp" alt="Rodopi Solar Logistic" class="brand-logo brand-logo--header" width="689" height="628" />
         </a>
 
+        <div class="header__quick-nav" aria-label="Бърза навигация към продуктови секции">
+          <div class="quick-menu nav__item nav__item--dropdown">
+            <a href="#catalog" class="quick-link quick-link--products" id="productsToggle" aria-haspopup="true" aria-expanded="false">Продукти <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+            <ul class="nav__dropdown">
+              <li><a href="#systems">Хибридни ФЕЦ системи</a></li>
+              <li><a href="#panels">Фотоволтаични панели</a></li>
+              <li><a href="#inverters">Хибридни инвертори Deye</a></li>
+              <li><a href="#batteries">Литиеви батерии LiFePO4</a></li>
+            </ul>
+          </div>
+          <a href="#systems" class="quick-link">Deye системи</a>
+          <a href="#batteries" class="quick-link">LiFePO4 батерии</a>
+          <a href="#portfolio" class="quick-link">Портфолио</a>
+        </div>
+
         <nav class="header__nav" id="nav">
           <ul class="nav__list">
-            <li class="nav__item nav__item--dropdown">
-              <a href="#catalog" id="productsToggle" aria-haspopup="true" aria-expanded="false">Продукти <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-              <ul class="nav__dropdown">
-                <li><a href="#systems">Хибридни ФЕЦ системи</a></li>
-                <li><a href="#panels">Фотоволтаични панели</a></li>
-                <li><a href="#inverters">Хибридни инвертори Deye</a></li>
-                <li><a href="#batteries">Литиеви батерии LiFePO4</a></li>
-              </ul>
-            </li>
-            <li class="nav__item"><a href="#systems">Deye системи</a></li>
-            <li class="nav__item"><a href="#batteries">LiFePO4 батерии</a></li>
-            <li class="nav__item"><a href="#portfolio">Портфолио</a></li>
-            <li class="nav__item"><a href="#consult" class="nav__cta">Безплатна консултация</a></li>
             <li class="nav__item"><a href="#about">За нас</a></li>
             <li class="nav__item"><a href="#contact">Контакти</a></li>
           </ul>
@@ -84,7 +86,6 @@
       <div class="hero__slide hero__slide--3 active">
         <div class="hero__overlay"></div>
         <div class="container hero__content">
-          <p class="hero__brand-name">Родопи Солар</p>
           <h1 class="hero__title">Инвестирайте в<br>устойчива енергия</h1>
           <p class="hero__sub">Намалете сметките си за ток и осигурете енергийна независимост за години напред.</p>
           <a href="#consult" class="btn btn--primary">БЕЗПЛАТНА КОНСУЛТАЦИЯ</a>
