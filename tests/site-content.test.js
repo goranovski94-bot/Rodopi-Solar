@@ -88,6 +88,14 @@ assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio
 assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
 
 [
+  'assets/products/hybrid-system-deye-lifepo4.jpg',
+  'assets/products/deye-hybrid-inverter.png',
+  'assets/products/lifepo4-battery-cabinet.jpg',
+].forEach((src) => {
+  assert.ok(html.includes(src), `Missing product image: ${src}`);
+});
+
+[
   ['DEYE', 'assets/logos/deye.png'],
   ['DAH Solar', 'assets/logos/dah-solar.png'],
   ['JA Solar', 'assets/logos/ja-solar.svg'],
@@ -101,6 +109,18 @@ assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge ba
 const manufacturersMatch = html.match(/<section class="manufacturers section"[^>]*>([\s\S]*?)<\/section>/);
 assert.ok(manufacturersMatch, 'Manufacturers section must exist');
 assert.ok(!manufacturersMatch[1].includes('<text'), 'Manufacturers logos must use image assets, not SVG text placeholders');
+
+const panelBrandsMatch = html.match(/<div class="brand-pills"[^>]*>([\s\S]*?)<\/div>/);
+assert.ok(panelBrandsMatch, 'Panel brand logo list must exist');
+[
+  ['DAH Solar', 'assets/logos/dah-solar.png'],
+  ['JA Solar', 'assets/logos/ja-solar.svg'],
+  ['LONGi Solar', 'assets/logos/longi-solar.png'],
+  ['Jinko Solar', 'assets/logos/jinko-solar.svg'],
+  ['GCL Solar', 'assets/logos/gcl-solar.svg'],
+].forEach(([alt, src]) => {
+  assert.match(panelBrandsMatch[1], new RegExp(`<img src="${src}" alt="${alt}"`), `Missing panel brand logo: ${alt}`);
+});
 
 const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
 const internalLinks = [...html.matchAll(/href="#([^"]+)"/g)].map((match) => match[1]);

@@ -159,10 +159,10 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 156px;
-  width: 156px;
-  height: 96px;
-  padding: .3rem;
+  flex: 0 0 172px;
+  width: 172px;
+  height: 104px;
+  padding: .18rem;
   border-radius: 18px;
   background: rgba(255,255,255,.9);
   box-shadow: 0 12px 28px rgba(15,23,42,.08);
@@ -193,7 +193,7 @@ textarea:focus-visible {
   height: 100%;
   max-width: none;
   object-fit: contain;
-  object-position: left center;
+  object-position: center;
 }
 .brand-logo--footer {
   width: 100%;
@@ -628,6 +628,13 @@ textarea:focus-visible {
   object-fit: cover;
   transition: transform .4s ease;
 }
+.catalog-card__img--product {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef6ff 100%);
+}
+.catalog-card__img--product img {
+  object-fit: contain;
+  padding: 1rem;
+}
 .catalog-card:hover .catalog-card__img img { transform: scale(1.07); }
 
 .catalog-card__overlay {
@@ -715,6 +722,13 @@ textarea:focus-visible {
   min-height: 260px;
   object-fit: cover;
 }
+.product-detail__media--product {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef6ff 100%);
+}
+.product-detail__media--product img {
+  object-fit: contain;
+  padding: 1.25rem;
+}
 
 .product-detail__body h3 {
   color: var(--dark);
@@ -748,6 +762,17 @@ textarea:focus-visible {
   font-size: .84rem;
   font-weight: 700;
   text-align: center;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.brand-pills img {
+  display: block;
+  width: 100%;
+  max-width: 128px;
+  max-height: 42px;
+  object-fit: contain;
 }
 .system-packages {
   grid-template-columns: repeat(3, minmax(0, 1fr));
