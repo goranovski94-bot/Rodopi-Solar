@@ -33,6 +33,10 @@ function assertIncludes(value, message) {
 });
 
 assertIncludes('rodopisolar@gmail.com', 'Contact email must be rodopisolar@gmail.com');
+assert.ok(!html.includes('href="mailto:rodopisolar@gmail.com"'), 'Email links must point to the free consultation section');
+assert.ok(!html.includes('href="tel:+359898459205"'), 'Phone links must point to the free consultation section');
+assert.ok(html.includes('<a href="#consult">+359898459205</a>'), 'Phone text must link to free consultation');
+assert.ok(html.includes('<a href="#consult">rodopisolar@gmail.com</a>'), 'Email text must link to free consultation');
 assert.strictEqual(countText('Инвестирайте в устойчива енергия'), 1, 'Hero headline must appear once');
 assert.strictEqual(
   countText('Намалете сметките си за ток и осигурете енергийна независимост за години напред.'),
