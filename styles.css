@@ -158,11 +158,20 @@ textarea:focus-visible {
 .header__logo {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  flex: 0 0 136px;
-  width: 136px;
-  height: 84px;
+  justify-content: center;
+  flex: 0 0 156px;
+  width: 156px;
+  height: 96px;
+  padding: .3rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 12px 28px rgba(15,23,42,.08);
   line-height: 0;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.header__logo:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(15,23,42,.12);
 }
 .footer__logo {
   display: inline-flex;
@@ -258,7 +267,16 @@ textarea:focus-visible {
 }
 
 /* Nav */
-.header__nav { flex: 0 0 auto; display: flex; justify-content: flex-end; }
+.header__nav {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  padding: .28rem;
+  border: 1px solid rgba(30,41,59,.08);
+  border-radius: 999px;
+  background: rgba(248,250,252,.82);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75);
+}
 .nav__list { display: flex; align-items: center; gap: .15rem; }
 .nav__item { position: relative; }
 .nav__item > a {
@@ -274,6 +292,16 @@ textarea:focus-visible {
 }
 .nav__item > a:hover,
 .nav__item:hover > a { background: var(--gray-bg); color: var(--primary); }
+.header__nav .nav__item > a {
+  border-radius: 999px;
+  font-weight: 700;
+  color: #1e3a5f;
+}
+.header__nav .nav__item > a:hover {
+  background: var(--white);
+  color: var(--primary-dark);
+  box-shadow: 0 6px 16px rgba(15,23,42,.08);
+}
 .nav__cta {
   background: var(--primary) !important;
   color: var(--dark) !important;
@@ -305,6 +333,11 @@ textarea:focus-visible {
   transform: translateY(0);
 }
 .nav__item--dropdown:focus-within .nav__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav__item--dropdown.open .nav__dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -1056,9 +1089,10 @@ textarea:focus-visible {
     flex-wrap: wrap;
   }
   .header__logo {
-    flex-basis: 108px;
-    width: 108px;
-    height: 58px;
+    flex-basis: 120px;
+    width: 120px;
+    height: 68px;
+    padding: .2rem;
   }
   .footer__logo {
     flex-basis: 128px;
@@ -1111,6 +1145,9 @@ textarea:focus-visible {
     position: fixed;
     inset: 0;
     background: var(--dark);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
     z-index: 998;
     flex-direction: column;
     justify-content: flex-start;
@@ -1139,6 +1176,10 @@ textarea:focus-visible {
     background: rgba(255,255,255,.04);
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 16px;
+  }
+  .header__nav .nav__item > a {
+    border-radius: 16px;
+    color: white;
   }
   .nav__dropdown {
     position: static;
@@ -1193,9 +1234,9 @@ textarea:focus-visible {
 @media (max-width: 480px) {
   .container { padding: 0 1rem; }
   .header__logo {
-    flex-basis: 92px;
-    width: 92px;
-    height: 52px;
+    flex-basis: 104px;
+    width: 104px;
+    height: 60px;
   }
   .footer__logo {
     flex-basis: 112px;

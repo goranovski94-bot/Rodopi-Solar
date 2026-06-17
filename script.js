@@ -121,8 +121,8 @@
   }
 
   if (burger && nav) {
-    const dropdownToggles = nav.querySelectorAll('.nav__item--dropdown > a');
-    const dropdownItems = nav.querySelectorAll('.nav__item--dropdown');
+    const dropdownToggles = document.querySelectorAll('.nav__item--dropdown > a, .nav__item--dropdown > button');
+    const dropdownItems = document.querySelectorAll('.nav__item--dropdown');
 
     setDropdownState = function (open) {
       dropdownItems.forEach(function (item) {
@@ -176,21 +176,25 @@
       updateHistoryState({ menuOpen: true, dropdownOpen: false }, false);
     });
 
-    // Mobile dropdown toggling
+    // Dropdown toggling
     dropdownToggles.forEach(function (link) {
       link.setAttribute('aria-expanded', 'false');
       link.addEventListener('click', function (e) {
-        if (window.innerWidth <= mobileBreakpoint) {
-          e.preventDefault();
-          const state = getNavigationState();
-          const willOpen = !link.parentElement.classList.contains('open');
+        e.preventDefault();
+        const state = getNavigationState();
+        const willOpen = !link.parentElement.classList.contains('open');
 
-          setDropdownState(willOpen);
-          if (state.menuOpen) {
-            updateHistoryState({ menuOpen: true, dropdownOpen: willOpen }, true);
-          }
+        setDropdownState(willOpen);
+        if (state.menuOpen) {
+          updateHistoryState({ menuOpen: true, dropdownOpen: willOpen }, true);
         }
       });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.nav__item--dropdown')) {
+        setDropdownState(false);
+      }
     });
 
     // Close menu on nav link click

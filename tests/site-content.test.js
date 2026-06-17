@@ -60,6 +60,7 @@ assert.strictEqual(
 
 [
   /<div class="header__quick-nav" aria-label="Бърза навигация към продуктови секции">/,
+  /<button type="button" class="quick-link quick-link--products" id="productsToggle" aria-haspopup="true" aria-expanded="false">Продукти/,
   /<a href="#systems" class="quick-link">Deye системи<\/a>/,
   /<a href="#batteries" class="quick-link">LiFePO4 батерии<\/a>/,
   /<a href="#portfolio" class="quick-link">Портфолио<\/a>/,
@@ -71,6 +72,14 @@ const headerMatch = html.match(/<header class="header" id="header">([\s\S]*?)<\/
 assert.ok(headerMatch, 'Header must exist');
 assert.ok(!headerMatch[1].includes('Безплатна консултация'), 'Free consultation must not appear in the top header');
 assert.ok(!html.includes('hero__brand-name'), 'Hero must not show Rodopi Solar text above the headline');
+assert.ok(!html.includes('Всички права запазени'), 'Footer legal copyright row must be removed');
+assert.ok(!html.includes('Политика за поверителност'), 'Footer privacy link must be removed');
+assert.ok(!html.includes('Политика за бисквитки'), 'Footer cookies link must be removed');
+assert.ok(!html.includes('Общи условия'), 'Footer terms link must be removed');
+assertIncludes(
+  'В Родопи Солар предлагаме проектиране, продажба, доставка и монтаж на високоефективни фотоволтаични системи, качествени компоненти, професионален монтаж и гаранция за дълъг експлоатационен живот за Вашите ФЕЦ системи.',
+  'Footer description must use the requested Rodopi Solar service text'
+);
 
 const productsDropdownMatch = html.match(/<ul class="nav__dropdown">([\s\S]*?)<\/ul>/);
 assert.ok(productsDropdownMatch, 'Products dropdown must exist');
