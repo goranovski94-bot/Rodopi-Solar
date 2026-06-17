@@ -59,13 +59,19 @@ assert.strictEqual(
 });
 
 [
-  /<a href="#systems" class="badge-link">Deye системи<\/a>/,
-  /<a href="#batteries" class="badge-link">LiFePO4 батерии<\/a>/,
-  /<a href="#portfolio" class="badge-link">Портфолио<\/a>/,
+  /<li class="nav__item"><a href="#systems">Deye системи<\/a><\/li>/,
+  /<li class="nav__item"><a href="#batteries">LiFePO4 батерии<\/a><\/li>/,
+  /<li class="nav__item"><a href="#portfolio">Портфолио<\/a><\/li>/,
   /<li class="nav__item"><a href="#contact">Контакти<\/a><\/li>/,
   /<li class="nav__item"><a href="#consult" class="nav__cta">Безплатна консултация<\/a><\/li>/,
   /<a href="#systems" class="btn btn--primary btn--sm">РАЗГЛЕДАЙ ТУК<\/a>/,
 ].forEach((pattern) => assert.match(html, pattern));
+
+const productsDropdownMatch = html.match(/<ul class="nav__dropdown">([\s\S]*?)<\/ul>/);
+assert.ok(productsDropdownMatch, 'Products dropdown must exist');
+assert.ok(!productsDropdownMatch[1].includes('#portfolio'), 'Portfolio must not be listed in Products dropdown');
+assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio must not be a product catalog card');
+assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
 
 const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
 const internalLinks = [...html.matchAll(/href="#([^"]+)"/g)].map((match) => match[1]);
