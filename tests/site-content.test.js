@@ -87,6 +87,21 @@ assert.ok(!productsDropdownMatch[1].includes('#portfolio'), 'Portfolio must not 
 assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio must not be a product catalog card');
 assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
 
+[
+  ['DEYE', 'assets/logos/deye.png'],
+  ['DAH Solar', 'assets/logos/dah-solar.png'],
+  ['JA Solar', 'assets/logos/ja-solar.svg'],
+  ['LONGi Solar', 'assets/logos/longi-solar.png'],
+  ['Jinko Solar', 'assets/logos/jinko-solar.svg'],
+  ['GCL Solar', 'assets/logos/gcl-solar.svg'],
+].forEach(([alt, src]) => {
+  assert.match(html, new RegExp(`<img src="${src}" alt="${alt}"`), `Missing logo image: ${alt}`);
+});
+
+const manufacturersMatch = html.match(/<section class="manufacturers section"[^>]*>([\s\S]*?)<\/section>/);
+assert.ok(manufacturersMatch, 'Manufacturers section must exist');
+assert.ok(!manufacturersMatch[1].includes('<text'), 'Manufacturers logos must use image assets, not SVG text placeholders');
+
 const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]));
 const internalLinks = [...html.matchAll(/href="#([^"]+)"/g)].map((match) => match[1]);
 internalLinks
