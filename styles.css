@@ -152,6 +152,51 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   color: #E2E8F0;
   border-color: rgba(148,163,184,.26);
 }
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .section--gray {
+  background: #020617;
+}
+:root[data-theme="dark"] .benefit-card,
+:root[data-theme="dark"] .catalog-card,
+:root[data-theme="dark"] .product-detail,
+:root[data-theme="dark"] .consult-cta__form,
+:root[data-theme="dark"] .manufacturer-logo {
+  background: #0B1120;
+  border-color: rgba(148,163,184,.22);
+  box-shadow: 0 16px 38px rgba(0,0,0,.28);
+}
+:root[data-theme="dark"] .catalog-card--highlight,
+:root[data-theme="dark"] .product-detail--spark,
+:root[data-theme="dark"] .portfolio.section--gray,
+:root[data-theme="dark"] .portfolio-item--product {
+  background:
+    radial-gradient(circle at top right, rgba(245,158,11,.16), transparent 34%),
+    linear-gradient(135deg, #020617 0%, #0F172A 54%, #111827 100%);
+}
+:root[data-theme="dark"] .catalog-card__body,
+:root[data-theme="dark"] .brand-pills span,
+:root[data-theme="dark"] .system-packages article,
+:root[data-theme="dark"] .manufacturer-logo {
+  background: rgba(15,23,42,.92);
+}
+:root[data-theme="dark"] .benefit-card p,
+:root[data-theme="dark"] .catalog-card__body p,
+:root[data-theme="dark"] .product-detail__body p,
+:root[data-theme="dark"] .feature-list li,
+:root[data-theme="dark"] .system-packages span,
+:root[data-theme="dark"] .footer__desc,
+:root[data-theme="dark"] .footer__hours {
+  color: #CBD5E1;
+}
+:root[data-theme="dark"] .catalog__banner,
+:root[data-theme="dark"] .consult-cta {
+  background: linear-gradient(135deg, #020617 0%, #172554 100%);
+}
+:root[data-theme="dark"] .product-detail__media,
+:root[data-theme="dark"] .why-solar__img-wrap,
+:root[data-theme="dark"] .portfolio-item {
+  box-shadow: 0 18px 42px rgba(0,0,0,.38);
+}
 
 /* ---- Buttons ---- */
 .btn {
@@ -1052,6 +1097,13 @@ textarea:focus-visible {
   object-fit: cover;
   transition: transform .4s ease;
   display: block;
+}
+.portfolio-item--product {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef6ff 100%);
+}
+.portfolio-item--product img {
+  object-fit: contain;
+  padding: 1rem;
 }
 .portfolio-item--featured img { height: 100%; min-height: 400px; }
 .portfolio-item:hover img { transform: scale(1.05); }

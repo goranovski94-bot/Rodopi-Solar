@@ -77,6 +77,7 @@ assert.strictEqual(
 
 const headerMatch = html.match(/<header class="header" id="header">([\s\S]*?)<\/header>/);
 assert.ok(headerMatch, 'Header must exist');
+assert.ok(headerMatch[1].indexOf('id="themeToggle"') < headerMatch[1].indexOf('href="#about"'), 'Theme toggle must appear before About in the header');
 assert.ok(!headerMatch[1].includes('Безплатна консултация'), 'Free consultation must not appear in the top header');
 assert.ok(!html.includes('hero__brand-name'), 'Hero must not show Rodopi Solar text above the headline');
 assert.ok(!html.includes('Всички права запазени'), 'Footer legal copyright row must be removed');
@@ -103,16 +104,30 @@ assert.ok(js.includes('setDropdownState(false);\n        scrollToSection(targetS
 assert.ok(js.includes("link.addEventListener('touchend'"), 'Products dropdown must listen for touchend on mobile devices');
 assert.ok(html.includes("localStorage.getItem('rodopi_theme')"), 'Saved theme must be applied before CSS loads');
 assert.match(css, /:root\[data-theme="dark"\]/, 'Dark theme variables must exist');
+assert.match(css, /:root\[data-theme="dark"\] \.catalog-card--highlight,[\s\S]*:root\[data-theme="dark"\] \.portfolio\.section--gray/, 'Dark theme must cover fixed light catalog and portfolio backgrounds');
 assert.match(css, /\.theme-toggle\[aria-pressed="true"\] \.theme-toggle__thumb/, 'Theme toggle must have an active visual state');
 assert.ok(js.includes("localStorage.setItem('rodopi_theme', nextTheme)"), 'Theme choice must be saved');
 assert.ok(js.includes("themeToggle.addEventListener('click'"), 'Theme toggle must respond to clicks and taps');
 
 [
+  'assets/products/photovoltaic-panels-closeup.jpg',
+  'assets/products/photovoltaic-panels-roof.jpg',
   'assets/products/hybrid-system-deye-lifepo4.jpg',
   'assets/products/deye-hybrid-inverter.png',
   'assets/products/lifepo4-battery-cabinet.jpg',
 ].forEach((src) => {
   assert.ok(html.includes(src), `Missing product image: ${src}`);
+});
+
+const portfolioMatch = html.match(/<section class="portfolio section section--gray" id="portfolio">([\s\S]*?)<\/section>/);
+assert.ok(portfolioMatch, 'Portfolio section must exist');
+assert.ok(!portfolioMatch[1].includes('images.unsplash.com'), 'Portfolio must use local suitable project images');
+[
+  'assets/portfolio/solar-portfolio-18kw.jpg',
+  'assets/portfolio/solar-portfolio-12kw-roof.jpg',
+  'assets/portfolio/solar-portfolio-15kw.jpg',
+].forEach((src) => {
+  assert.ok(portfolioMatch[1].includes(src), `Missing local portfolio image: ${src}`);
 });
 
 [
