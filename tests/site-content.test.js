@@ -70,6 +70,7 @@ assert.strictEqual(
   /<a href="#systems" class="quick-link">Deye системи<\/a>/,
   /<a href="#batteries" class="quick-link">LiFePO4 батерии<\/a>/,
   /<a href="#portfolio" class="quick-link">Портфолио<\/a>/,
+  /<button type="button" class="theme-toggle" id="themeToggle" aria-label="Смени тъмен и светъл режим" aria-pressed="false">/,
   /<li class="nav__item"><a href="#footer-contact">Контакти<\/a><\/li>/,
   /<a href="#systems" class="btn btn--primary btn--sm">РАЗГЛЕДАЙ ТУК<\/a>/,
 ].forEach((pattern) => assert.match(html, pattern));
@@ -100,6 +101,11 @@ assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__burger \{ display
 assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.header__nav \{[\s\S]*position: static;/, 'Mobile About and Contacts links must remain visible beside the logo');
 assert.ok(js.includes('setDropdownState(false);\n        scrollToSection(targetSection);'), 'Product dropdown must close after selecting a section');
 assert.ok(js.includes("link.addEventListener('touchend'"), 'Products dropdown must listen for touchend on mobile devices');
+assert.ok(html.includes("localStorage.getItem('rodopi_theme')"), 'Saved theme must be applied before CSS loads');
+assert.match(css, /:root\[data-theme="dark"\]/, 'Dark theme variables must exist');
+assert.match(css, /\.theme-toggle\[aria-pressed="true"\] \.theme-toggle__thumb/, 'Theme toggle must have an active visual state');
+assert.ok(js.includes("localStorage.setItem('rodopi_theme', nextTheme)"), 'Theme choice must be saved');
+assert.ok(js.includes("themeToggle.addEventListener('click'"), 'Theme toggle must respond to clicks and taps');
 
 [
   'assets/products/hybrid-system-deye-lifepo4.jpg',

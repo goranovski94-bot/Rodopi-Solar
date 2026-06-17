@@ -6,6 +6,36 @@
   'use strict';
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const themeToggle = document.getElementById('themeToggle');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  function applyTheme(theme, persist) {
+    const nextTheme = theme === 'dark' ? 'dark' : 'light';
+    const isDark = nextTheme === 'dark';
+
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    if (themeMeta) themeMeta.setAttribute('content', isDark ? '#020617' : '#F59E0B');
+
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Включи светъл режим' : 'Включи тъмен режим');
+      const label = themeToggle.querySelector('.theme-toggle__text');
+      if (label) label.textContent = isDark ? 'Светъл' : 'Тъмен';
+    }
+
+    if (persist) {
+      try { localStorage.setItem('rodopi_theme', nextTheme); } catch (_) {}
+    }
+  }
+
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light', false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      applyTheme(isDark ? 'light' : 'dark', true);
+    });
+  }
 
   /* ---- Hero Slider ---- */
   const slides = document.querySelectorAll('.hero__slide');
