@@ -1513,6 +1513,7 @@ textarea:focus-visible {
   .product-detail__body:only-child { grid-column: 1; }
   .product-detail__media img { min-height: 220px; }
   .portfolio__grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-item__info { transform: translateY(0); }
   .manufacturers__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .portfolio-item--featured { grid-column: span 2; }
 

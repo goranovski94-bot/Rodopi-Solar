@@ -130,19 +130,48 @@ assert.ok(js.includes('window.innerWidth > mobileBreakpoint ? true'), 'Desktop p
   'assets/products/hybrid-system-deye-lifepo4.jpg',
   'assets/products/deye-hybrid-inverter.png',
   'assets/products/lifepo4-battery-cabinet.jpg',
+  'assets/products/hybrid-system-roof-installation.jpg',
+  'assets/products/inverter-protection-panel.jpg',
+  'assets/products/inverter-storage-installation.jpg',
 ].forEach((src) => {
   assert.ok(html.includes(src), `Missing product image: ${src}`);
 });
 
+const pagePhotoSources = [...html.matchAll(/<img src="([^"]+)"/g)]
+  .map((match) => match[1])
+  .filter((src) => !src.includes('/logos/') && !src.includes('rodopi-solar-logo'));
+assert.strictEqual(
+  new Set(pagePhotoSources).size,
+  pagePhotoSources.length,
+  'Visible non-logo photos must not repeat across the page'
+);
+
 const portfolioMatch = html.match(/<section class="portfolio section section--gray" id="portfolio">([\s\S]*?)<\/section>/);
 assert.ok(portfolioMatch, 'Portfolio section must exist');
 assert.ok(!portfolioMatch[1].includes('images.unsplash.com'), 'Portfolio must use local suitable project images');
-assert.ok(!portfolioMatch[1].includes('assets/products/deye-hybrid-inverter.png'), 'Portfolio must not use product-only inverter imagery');
-assert.ok(!portfolioMatch[1].includes('assets/products/lifepo4-battery-cabinet.jpg'), 'Portfolio must not use product-only battery imagery');
+assert.ok(!portfolioMatch[1].includes('assets/products/'), 'Portfolio must not reuse product images');
+const portfolioImageSources = [...portfolioMatch[1].matchAll(/<img src="([^"]+)"/g)].map((match) => match[1]);
+assert.ok(portfolioImageSources.length >= 9, 'Portfolio should show a complete gallery of project images');
+assert.strictEqual(
+  new Set(portfolioImageSources).size,
+  portfolioImageSources.length,
+  'Portfolio image sources must not repeat'
+);
+portfolioImageSources.forEach((src) => {
+  assert.ok(src.startsWith('assets/portfolio/'), `Portfolio image must come from assets/portfolio: ${src}`);
+});
 [
   'assets/portfolio/solar-portfolio-18kw.jpg',
   'assets/portfolio/solar-portfolio-12kw-roof.jpg',
   'assets/portfolio/solar-portfolio-15kw.jpg',
+  'assets/portfolio/solar-portfolio-commercial-worker.jpg',
+  'assets/portfolio/solar-portfolio-field-closeup.jpg',
+  'assets/portfolio/solar-portfolio-flat-roof.jpg',
+  'assets/portfolio/solar-portfolio-home-roof.jpg',
+  'assets/portfolio/solar-portfolio-installers.jpg',
+  'assets/portfolio/solar-portfolio-field-array.jpg',
+  'assets/portfolio/solar-portfolio-residential-roof.jpg',
+  'assets/portfolio/solar-portfolio-sunset-roof.jpg',
 ].forEach((src) => {
   assert.ok(portfolioMatch[1].includes(src), `Missing local portfolio image: ${src}`);
 });
