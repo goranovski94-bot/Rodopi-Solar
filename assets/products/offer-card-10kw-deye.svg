@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620" role="img" aria-label="Монофазна 10kW Deye 16kWh">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#123555"/><stop offset=".58" stop-color="#0F5132"/><stop offset="1" stop-color="#D79B2B"/></linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#172235"/><stop offset="1" stop-color="#020617"/></linearGradient>
+    <linearGradient id="device" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DDE7EF"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#020617" flood-opacity=".36"/></filter>
+  </defs>
+  <rect width="900" height="620" rx="34" fill="url(#bg)"/>
+  <circle cx="155" cy="488" r="252" fill="#FFFFFF" opacity=".13"/>
+  <circle cx="738" cy="455" r="205" fill="#F59E0B" opacity=".2"/>
+
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <text x="450" y="82" font-size="54" font-weight="900" fill="#FFFFFF">Монофазна</text>
+    <text x="450" y="163" font-size="78" font-weight="900" fill="#F4C461">10kW + Deye</text>
+    <text x="450" y="222" font-size="44" font-weight="900" fill="#FFFFFF">батерия 16kWh</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <g transform="translate(249 304) rotate(-7)"><rect width="250" height="238" rx="11" fill="#F8FAFC"/><rect x="15" y="15" width="220" height="208" rx="5" fill="url(#panel)"/><line x1="51.666666666666664" y1="25" x2="51.666666666666664" y2="213" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="88.33333333333333" y1="25" x2="88.33333333333333" y2="213" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="125" y1="25" x2="125" y2="213" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="161.66666666666666" y1="25" x2="161.66666666666666" y2="213" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="198.33333333333331" y1="25" x2="198.33333333333331" y2="213" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="56.6" x2="225" y2="56.6" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="98.2" x2="225" y2="98.2" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="139.8" x2="225" y2="139.8" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="181.4" x2="225" y2="181.4" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/></g>
+    <g transform="translate(313 286) rotate(-3)"><rect width="260" height="254" rx="11" fill="#F8FAFC"/><rect x="15" y="15" width="230" height="224" rx="5" fill="url(#panel)"/><line x1="53.333333333333336" y1="25" x2="53.333333333333336" y2="229" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="91.66666666666667" y1="25" x2="91.66666666666667" y2="229" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="130" y1="25" x2="130" y2="229" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="168.33333333333334" y1="25" x2="168.33333333333334" y2="229" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="206.66666666666669" y1="25" x2="206.66666666666669" y2="229" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="59.8" x2="235" y2="59.8" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="104.6" x2="235" y2="104.6" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="149.39999999999998" x2="235" y2="149.39999999999998" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="25" y1="194.2" x2="235" y2="194.2" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/></g>
+    <g transform="translate(382 278)"><rect width="272" height="270" rx="11" fill="#F8FAFC"/><rect x="16" y="16" width="240" height="238" rx="5" fill="url(#panel)"/><line x1="56" y1="26" x2="56" y2="244" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="96" y1="26" x2="96" y2="244" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="136" y1="26" x2="136" y2="244" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="176" y1="26" x2="176" y2="244" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="216" y1="26" x2="216" y2="244" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="26" y1="63.6" x2="246" y2="63.6" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="26" y1="111.2" x2="246" y2="111.2" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="26" y1="158.8" x2="246" y2="158.8" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/><line x1="26" y1="206.4" x2="246" y2="206.4" stroke="#A6B4C4" stroke-width="2.2" opacity=".85"/></g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="132" y="357" width="126" height="184" rx="18" fill="url(#device)"/>
+    <rect x="156" y="397" width="78" height="62" rx="8" fill="#0F172A"/>
+    <rect x="173" y="414" width="44" height="16" rx="4" fill="#F8FAFC"/>
+    <circle cx="195" cy="444" r="8" fill="#4F8D3D"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="675" y="357" width="84" height="184" rx="18" fill="url(#device)"/>
+    <circle cx="717" cy="408" r="13" fill="#111827"/><circle cx="717" cy="408" r="4" fill="#FFFFFF"/>
+  </g>
+
+  <g transform="translate(55 256)">
+    <rect width="202" height="58" rx="29" fill="#F4C461" opacity=".98"/>
+    <text x="101" y="38" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="900" fill="#0F172A">N-Type</text>
+  </g>
+</svg>

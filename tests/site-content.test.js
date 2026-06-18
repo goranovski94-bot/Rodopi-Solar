@@ -40,12 +40,46 @@ assert.ok(!html.includes('href="tel:+359898459205"'), 'Phone links must point to
 assert.match(html, /<a href="#consult"[^>]*>\+359898459205<\/a>/, 'Phone text must link to free consultation');
 assert.match(html, /<a href="#consult"[^>]*>rodopisolar@gmail.com<\/a>/, 'Email text must link to free consultation');
 assert.ok(html.includes('class="footer__contact-link"'), 'Footer contact links must use the emphasized contact style');
-assert.strictEqual(countText('Инвестирайте в устойчива енергия'), 1, 'Hero headline must appear once');
-assert.strictEqual(
-  countText('Намалете сметките си за ток и осигурете енергийна независимост за години напред.'),
-  1,
-  'Hero support text must appear once'
-);
+assert.ok(!normalizedText.includes('Инвестирайте в устойчива енергия'), 'Old hero headline must be replaced by offer cards');
+assert.ok(!normalizedText.includes('Намалете сметките си за ток и осигурете енергийна независимост за години напред.'), 'Old hero support text must be replaced by offer cards');
+assert.strictEqual(countText('Хибридни ФЕЦ комплекти с включена батерия'), 1, 'Hero offer heading must appear once');
+
+const heroMatch = html.match(/<section class="hero" id="home">([\s\S]*?)<\/section>/);
+assert.ok(heroMatch, 'Hero section must exist');
+assert.ok(heroMatch[1].includes('class="hero-offers"'), 'Hero must include the offer-card grid');
+assert.ok(heroMatch[1].includes('id="system-offers"'), 'Hero offer grid must have a direct anchor for product navigation');
+assert.ok(heroMatch[1].includes('class="btn btn--primary"'), 'Free consultation button must remain in the hero');
+assert.ok(!heroMatch[1].includes('Базови'), 'Hero offers must not use the "Базови" label');
+assert.ok(!heroMatch[1].includes('hero-offer-card__specs'), 'Hero offer images must not use overlay labels on top of the bitmap');
+[
+  'assets/products/offer-card-6kw-deye.svg',
+  'assets/products/offer-card-8kw-deye.svg',
+  'assets/products/offer-card-10kw-deye.svg',
+  'assets/products/offer-card-10kw-dyness.svg',
+  'assets/products/offer-card-12kw-deye.svg',
+  'assets/products/offer-card-15kw-deye.svg',
+  'assets/products/offer-card-20kw-deye.svg',
+  'assets/products/offer-card-20kw-dyness.svg',
+].forEach((src) => {
+  assert.ok(heroMatch[1].includes(src), `Hero offer must use corrected generated banner: ${src}`);
+  const assetText = fs.readFileSync(path.join(__dirname, '..', src), 'utf8');
+  assert.ok(!assetText.includes('€'), `Corrected generated banner must not contain an in-image price: ${src}`);
+});
+assert.ok(!heroMatch[1].includes('assets/products/hero-offer-'), 'Hero offers must not use old bitmap banners with conflicting in-image text');
+[
+  ['Монофазна ФЕЦ система 6kW + Батерия Deye 16kWh', '4 499,00 €'],
+  ['Монофазна ФЕЦ система 8kW + Батерия Deye 16kWh', '5 199,00 €'],
+  ['Монофазна ФЕЦ система 10kW + Батерия Deye 16kWh', '5 449,00 €'],
+  ['Монофазна ФЕЦ система 10kW + Батерия Dyness 14.3kWh', '5 540,00 €'],
+  ['Трифазна ФЕЦ система 12kW + Батерия Deye 16kWh', '6 299,00 €'],
+  ['Трифазна ФЕЦ система 15kW + Батерия Deye 16kWh', '7 099,00 €'],
+  ['Трифазна ФЕЦ система 20kW + Батерия Deye 16kWh', '8 295,00 €'],
+  ['Трифазна ФЕЦ система 20kW + Батерия Dyness 14.3kWh', '8 395,00 €'],
+].forEach(([title, price]) => {
+  assert.ok(heroMatch[1].includes(title), `Missing hero offer title: ${title}`);
+  assert.ok(heroMatch[1].includes(price), `Missing hero offer price: ${price}`);
+});
+assert.ok(!heroMatch[1].includes('лв.'), 'Hero offer prices must be shown only in EUR');
 
 [
   'Фотоволтаични панели',
@@ -65,10 +99,24 @@ assert.strictEqual(
   assertIncludes(size, `Missing hybrid system size: ${size}`);
 });
 
+const systemPackagesMatch = html.match(/<div class="system-packages">([\s\S]*?)<\/div>/);
+assert.ok(systemPackagesMatch, 'System packages grid must exist');
+[
+  'от 4 499,00 €',
+  'от 5 199,00 €',
+  'от 5 449,00 €',
+  'от 6 299,00 €',
+  'от 7 099,00 €',
+  'от 8 295,00 €',
+].forEach((price) => {
+  assert.ok(systemPackagesMatch[1].includes(price), `Missing system package price: ${price}`);
+});
+assert.ok(!systemPackagesMatch[1].includes('лв.'), 'System package prices must be shown only in EUR');
+
 [
   /<div class="header__quick-nav" aria-label="Бърза навигация към продуктови секции">/,
   /<button type="button" class="quick-link quick-link--products" id="productsToggle" aria-haspopup="true" aria-expanded="false">Продукти/,
-  /<a href="#systems" class="quick-link">Deye системи<\/a>/,
+  /<a href="#system-offers" class="quick-link">Deye системи<\/a>/,
   /<a href="#batteries" class="quick-link">LiFePO4 батерии<\/a>/,
   /<a href="#portfolio" class="quick-link">Портфолио<\/a>/,
   /<button type="button" class="theme-toggle" id="themeToggle" aria-label="Смени тъмен и светъл режим" aria-pressed="false">/,
@@ -92,6 +140,7 @@ assertIncludes(
 
 const productsDropdownMatch = html.match(/<ul class="nav__dropdown">([\s\S]*?)<\/ul>/);
 assert.ok(productsDropdownMatch, 'Products dropdown must exist');
+assert.match(productsDropdownMatch[1], /<li><a href="#system-offers">Хибридни ФЕЦ системи<\/a><\/li>/, 'Products dropdown must link hybrid systems to the new offer cards');
 assert.ok(!productsDropdownMatch[1].includes('#portfolio'), 'Portfolio must not be listed in Products dropdown');
 assert.ok(!html.includes('<a href="#portfolio" class="catalog-card'), 'Portfolio must not be a product catalog card');
 assert.ok(!html.includes('header__badge-bar'), 'The separate quick-link badge bar must be removed');
@@ -111,6 +160,18 @@ assert.match(css, /\.header__logo \{[\s\S]*border: 1px solid rgba\(245,158,11,\.
 assert.match(css, /:root\[data-theme="dark"\] \.header__logo \{[\s\S]*border-color: rgba\(245,158,11,\.36\);/, 'Header logo must stay defined in dark mode');
 assert.match(css, /\.hero__content \{[\s\S]*color: #FFFFFF;/, 'Hero content must stay readable in dark mode');
 assert.match(css, /\.hero__title \{[\s\S]*color: #FFFFFF;/, 'Hero title must stay white over the image in dark mode');
+const heroOfferImageCss = css.match(/\.hero-offer-card img \{([\s\S]*?)\n\}/);
+assert.ok(heroOfferImageCss, 'Hero offer image CSS block must exist');
+assert.ok(heroOfferImageCss[1].includes('object-fit: contain;'), 'Hero offer images must show the complete corrected banner without cropping');
+assert.ok(heroOfferImageCss[1].includes('background: #0f5132;'), 'Hero offer image frame must use a suitable green background');
+assert.match(css, /\.hero-offers \{[\s\S]*grid-auto-rows: 1fr;/, 'Hero offers must keep cards evenly aligned across rows');
+assert.match(css, /\.hero-offer-card \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'Hero offer cards must use a stable vertical layout');
+assert.match(css, /\.hero-offer-card__media \{[\s\S]*background: linear-gradient\(135deg, #1e3a5f/, 'Hero offer media frames must use site colors around the uploaded images');
+assert.match(css, /\.hero-offer-card__body \{[\s\S]*background: linear-gradient\(180deg, #FFFFFF/, 'Hero offer card text area must use a clean site-matched surface');
+assert.match(css, /\.hero-offer-card__body h2 \{[\s\S]*min-height: 2\.4em;/, 'Hero offer titles must reserve stable space for phone text wrapping');
+assert.match(css, /\.hero-offer-card__body p \{[\s\S]*background: rgba\(245,158,11,\.16\);[\s\S]*color: #1E3A5F;/, 'Hero offer prices must use the site gold and blue palette');
+assert.match(css, /\.system-packages__price \{[\s\S]*color: #4F8D3D;/, 'System package prices must have a clear price style');
+assert.match(css, /\.system-packages article \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'System package cards must keep price aligned on desktop and mobile');
 assert.match(css, /\.catalog__banner \{[\s\S]*color: #FFFFFF;/, 'Best-selling catalog banner must stay readable in dark mode');
 assert.match(css, /\.consult-cta \{[\s\S]*color: #FFFFFF;/, 'Consult section text must stay readable in dark mode');
 assert.match(css, /\.consult-cta__text h2 \{[\s\S]*color: #FFFFFF;/, 'Consult heading must stay readable in dark mode');
