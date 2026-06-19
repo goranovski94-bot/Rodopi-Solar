@@ -51,6 +51,10 @@ assert.ok(heroMatch[1].includes('id="system-offers"'), 'Hero offer grid must hav
 assert.ok(heroMatch[1].includes('class="btn btn--primary"'), 'Free consultation button must remain in the hero');
 assert.ok(!heroMatch[1].includes('Базови'), 'Hero offers must not use the "Базови" label');
 assert.ok(!heroMatch[1].includes('hero-offer-card__specs'), 'Hero offer images must not use overlay labels on top of the bitmap');
+assert.ok(!css.includes('photo-1497440001374-f26997328c1b'), 'Hero offer background must not use the blurry remote panel image');
+assert.match(css, /\.hero__slide--3 \{[\s\S]*background-image: url\('assets\/portfolio\/solar-portfolio-aerial-panel-rows\.jpg'\);[\s\S]*background-position: center 46%;/, 'Hero offer background must use the sharp local panel-and-grass image');
+assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets/portfolio/solar-portfolio-aerial-panel-rows-mobile.jpg')), 'Mobile hero offer background must have an optimized local panel-and-grass image');
+assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.hero__slide--3 \{[\s\S]*background-image: url\('assets\/portfolio\/solar-portfolio-aerial-panel-rows-mobile\.jpg'\);[\s\S]*background-position: center top;/, 'Mobile hero offer background must keep panels and grass visible without a blurry crop');
 [
   'assets/products/offer-card-6kw-deye.svg',
   'assets/products/offer-card-8kw-deye.svg',

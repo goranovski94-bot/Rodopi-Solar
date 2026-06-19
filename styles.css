@@ -593,7 +593,8 @@ textarea:focus-visible {
   background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80&auto=format&fit=crop');
 }
 .hero__slide--3 {
-  background-image: url('https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=1600&q=80&auto=format&fit=crop');
+  background-image: url('assets/portfolio/solar-portfolio-aerial-panel-rows.jpg');
+  background-position: center 46%;
 }
 
 @media (max-width: 768px) {
@@ -604,7 +605,8 @@ textarea:focus-visible {
     background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=900&q=70&auto=format&fit=crop');
   }
   .hero__slide--3 {
-    background-image: url('https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=900&q=70&auto=format&fit=crop');
+    background-image: url('assets/portfolio/solar-portfolio-aerial-panel-rows-mobile.jpg');
+    background-position: center top;
   }
 }
 
@@ -612,6 +614,12 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   background: linear-gradient(120deg, rgba(15,23,42,.78) 0%, rgba(15,23,42,.35) 100%);
+}
+
+.hero__slide--3 .hero__overlay {
+  background:
+    linear-gradient(180deg, rgba(15,23,42,.72) 0%, rgba(15,23,42,.50) 44%, rgba(15,23,42,.66) 100%),
+    linear-gradient(90deg, rgba(6,95,70,.20), rgba(15,23,42,0));
 }
 
 .hero__content {
