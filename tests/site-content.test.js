@@ -64,6 +64,9 @@ assert.ok(!heroMatch[1].includes('hero-offer-card__specs'), 'Hero offer images m
   assert.ok(heroMatch[1].includes(src), `Hero offer must use corrected generated banner: ${src}`);
   const assetText = fs.readFileSync(path.join(__dirname, '..', src), 'utf8');
   assert.ok(!assetText.includes('€'), `Corrected generated banner must not contain an in-image price: ${src}`);
+  assert.ok(assetText.includes('class="offer-grass"'), `Offer banner must include a visible grass base: ${src}`);
+  assert.ok(assetText.includes('class="solar-module"'), `Offer banner must include prominent realistic solar modules: ${src}`);
+  assert.ok(assetText.includes('<animate'), `Offer banner must include subtle built-in motion: ${src}`);
 });
 assert.ok(!heroMatch[1].includes('assets/products/hero-offer-'), 'Hero offers must not use old bitmap banners with conflicting in-image text');
 [
@@ -164,6 +167,8 @@ const heroOfferImageCss = css.match(/\.hero-offer-card img \{([\s\S]*?)\n\}/);
 assert.ok(heroOfferImageCss, 'Hero offer image CSS block must exist');
 assert.ok(heroOfferImageCss[1].includes('object-fit: contain;'), 'Hero offer images must show the complete corrected banner without cropping');
 assert.ok(heroOfferImageCss[1].includes('background: #0f5132;'), 'Hero offer image frame must use a suitable green background');
+assert.match(css, /@keyframes offerCardFloat/, 'Hero offer cards must include a smooth float animation');
+assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.hero-offer-card \{[\s\S]*animation: none;/, 'Offer animation must respect reduced motion preferences');
 assert.match(css, /\.hero-offers \{[\s\S]*grid-auto-rows: 1fr;/, 'Hero offers must keep cards evenly aligned across rows');
 assert.match(css, /\.hero-offer-card \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'Hero offer cards must use a stable vertical layout');
 assert.match(css, /\.hero-offer-card__media \{[\s\S]*background: linear-gradient\(135deg, #1e3a5f/, 'Hero offer media frames must use site colors around the uploaded images');
