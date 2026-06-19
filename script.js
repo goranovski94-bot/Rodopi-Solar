@@ -8,12 +8,19 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const themeToggle = document.getElementById('themeToggle');
   const themeMeta = document.querySelector('meta[name="theme-color"]');
+  let themeSwitchTimer;
 
   function applyTheme(theme, persist) {
     const nextTheme = theme === 'dark' ? 'dark' : 'light';
     const isDark = nextTheme === 'dark';
+    const root = document.documentElement;
 
-    document.documentElement.setAttribute('data-theme', nextTheme);
+    if (persist) {
+      clearTimeout(themeSwitchTimer);
+      root.classList.add('theme-switching');
+    }
+
+    root.setAttribute('data-theme', nextTheme);
     if (themeMeta) themeMeta.setAttribute('content', isDark ? '#020617' : '#F59E0B');
 
     if (themeToggle) {
@@ -25,6 +32,11 @@
 
     if (persist) {
       try { localStorage.setItem('rodopi_theme', nextTheme); } catch (_) {}
+      requestAnimationFrame(function () {
+        themeSwitchTimer = setTimeout(function () {
+          root.classList.remove('theme-switching');
+        }, 120);
+      });
     }
   }
 

@@ -47,6 +47,13 @@ body {
   transition: background var(--transition), color var(--transition);
 }
 
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; height: auto; }
 ul { list-style: none; }
@@ -742,7 +749,6 @@ textarea:focus-visible {
   object-fit: contain;
   object-position: center;
   background: #0f5132;
-  filter: saturate(1.04) contrast(1.08) brightness(1.02);
 }
 
 .hero-offer-card__body {
