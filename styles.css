@@ -712,21 +712,19 @@ textarea:focus-visible {
   border-radius: 8px;
   box-shadow: 0 18px 42px rgba(15,23,42,.28);
   color: var(--dark);
-  animation: offerCardFloat 7.5s ease-in-out infinite;
-  will-change: transform;
-}
-
-.hero-offer-card:nth-child(2n) {
-  animation-delay: -2.4s;
-}
-
-.hero-offer-card:nth-child(3n) {
-  animation-delay: -4.1s;
 }
 
 .hero-offer-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 22px 50px rgba(15,23,42,.34);
+}
+
+.hero-offer-card:hover .hero-offer-card__body p,
+.hero-offer-card:focus-within .hero-offer-card__body p {
+  background: #F59E0B;
+  border-color: rgba(15,23,42,.18);
+  box-shadow: 0 13px 28px rgba(245,158,11,.36), inset 0 1px 0 rgba(255,255,255,.62);
+  transform: translateY(-1px);
 }
 
 .hero-offer-card__media {
@@ -745,11 +743,6 @@ textarea:focus-visible {
   object-position: center;
   background: #0f5132;
   filter: saturate(1.04) contrast(1.08) brightness(1.02);
-}
-
-@keyframes offerCardFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
 }
 
 .hero-offer-card__body {
@@ -786,14 +779,16 @@ textarea:focus-visible {
   align-items: center;
   justify-content: center;
   margin-top: auto;
-  padding: .34rem .64rem;
-  border: 1px solid rgba(245,158,11,.34);
+  padding: .42rem .78rem;
+  border: 1px solid rgba(245,158,11,.68);
   border-radius: 999px;
-  background: rgba(245,158,11,.16);
-  color: #1E3A5F;
-  font-size: clamp(.9rem, 1vw, 1rem);
+  background: #F4C461;
+  color: #0F172A;
+  font-size: clamp(1rem, 1.08vw, 1.12rem);
   line-height: 1.25;
-  font-weight: 800;
+  font-weight: 900;
+  box-shadow: 0 10px 24px rgba(15,23,42,.16), inset 0 1px 0 rgba(255,255,255,.55);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
 
 .hero-offer-card__body small {
@@ -1116,14 +1111,16 @@ textarea:focus-visible {
   align-items: center;
   width: fit-content;
   margin-top: auto;
-  padding: .32rem .62rem;
+  padding: .4rem .72rem;
   border-radius: 999px;
-  background: rgba(79,141,61,.12);
-  color: #4F8D3D;
-  font-size: .95rem;
+  border: 1px solid rgba(245,158,11,.62);
+  background: #F4C461;
+  color: #0F172A;
+  font-size: 1rem;
   line-height: 1.2;
   font-style: normal;
-  font-weight: 800;
+  font-weight: 900;
+  box-shadow: 0 9px 22px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.55);
 }
 
 .feature-list {
@@ -1777,7 +1774,8 @@ textarea:focus-visible {
     line-height: 1.2;
   }
   .hero-offer-card__body p {
-    font-size: .84rem;
+    font-size: .92rem;
+    padding: .4rem .66rem;
   }
   .hero__logo-card {
     display: flex;
@@ -1825,10 +1823,6 @@ textarea:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-offer-card {
-    animation: none;
-    will-change: auto;
-  }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
