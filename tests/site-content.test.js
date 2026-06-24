@@ -309,6 +309,8 @@ assert.ok(
 const manufacturersMatch = html.match(/<section class="manufacturers section"[^>]*>([\s\S]*?)<\/section>/);
 assert.ok(manufacturersMatch, 'Manufacturers section must exist');
 assert.ok(!manufacturersMatch[1].includes('<text'), 'Manufacturers logos must use image assets, not SVG text placeholders');
+assert.doesNotMatch(css, /\.manufacturer-logo:hover/, 'Manufacturer logo cards must remain static and not highlight on hover');
+assert.match(css, /\.manufacturer-logo \{[\s\S]*transition: none;/, 'Manufacturer logo cards must not animate on hover or touch');
 assert.match(css, /:root\[data-theme="dark"\] \.brand-pills span,[\s\S]*:root\[data-theme="dark"\] \.manufacturer-logo \{[\s\S]*background: linear-gradient\(145deg, #FFFFFF/, 'Manufacturer logos must stay on a light logo card in dark mode');
 assert.match(css, /:root\[data-theme="dark"\] \.brand-pills img,[\s\S]*:root\[data-theme="dark"\] \.manufacturer-logo img \{[\s\S]*opacity: 1;/, 'Manufacturer logos must stay fully visible in dark mode');
 
