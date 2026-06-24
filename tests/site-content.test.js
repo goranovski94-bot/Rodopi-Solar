@@ -59,6 +59,8 @@ assert.ok(heroMatch, 'Hero section must exist');
 assert.ok(heroMatch[1].includes('class="hero-offers"'), 'Hero must include the offer-card grid');
 assert.ok(heroMatch[1].includes('id="system-offers"'), 'Hero offer grid must have a direct anchor for product navigation');
 assert.ok(heroMatch[1].includes('class="btn btn--primary"'), 'Free consultation button must remain in the hero');
+assert.strictEqual((heroMatch[1].match(/<a href="#consult" class="hero-offer-card"/g) || []).length, 8, 'Each hero offer card must be clickable and lead to free consultation');
+assert.ok(!heroMatch[1].includes('<article class="hero-offer-card">'), 'Hero offer cards must not be non-clickable article cards');
 assert.ok(!heroMatch[1].includes('Базови'), 'Hero offers must not use the "Базови" label');
 assert.ok(!heroMatch[1].includes('hero-offer-card__specs'), 'Hero offer images must not use overlay labels on top of the bitmap');
 assert.ok(!css.includes('photo-1497440001374-f26997328c1b'), 'Hero offer background must not use the blurry remote panel image');
@@ -81,6 +83,8 @@ assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.hero__slide--3 \{[\s\S]*b
   assert.ok(!assetText.includes('N-Type'), `Offer banner must replace N-Type with the free installation badge: ${src}`);
   assert.ok(assetText.includes('\u0411\u0415\u0417\u041f\u041b\u0410\u0422\u0415\u041d'), `Offer banner must show the free installation badge clearly: ${src}`);
   assert.ok(assetText.includes('\u041c\u041e\u041d\u0422\u0410\u0416'), `Offer banner must show installation text clearly: ${src}`);
+  assert.ok(assetText.includes('fill="#064E3B">\u0411\u0415\u0417\u041f\u041b\u0410\u0422\u0415\u041d'), `Offer banner free installation badge must use a site-matched green text color: ${src}`);
+  assert.ok(assetText.includes('fill="#064E3B">\u041c\u041e\u041d\u0422\u0410\u0416'), `Offer banner installation text must use a site-matched green text color: ${src}`);
   assert.ok(assetText.includes('width="320" height="96"'), `Offer banner free installation badge must be large enough to read: ${src}`);
   assert.ok(assetText.includes('font-size="34"'), `Offer banner installation line must be visually emphasized: ${src}`);
   assert.ok(assetText.includes('class="offer-grass"'), `Offer banner must include a visible grass base: ${src}`);
@@ -202,6 +206,8 @@ assert.match(css, /\.hero-offer-card__body p \{[\s\S]*background: #F4C461;[\s\S]
 assert.match(css, /\.hero-offer-card:hover \.hero-offer-card__body p/, 'Hero offer prices must have a non-continuous hover emphasis');
 assert.match(css, /\.hero-offers \{[\s\S]*grid-auto-rows: 1fr;/, 'Hero offers must keep cards evenly aligned across rows');
 assert.match(css, /\.hero-offer-card \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'Hero offer cards must use a stable vertical layout');
+assert.match(css, /\.hero-offer-card \{[\s\S]*text-decoration: none;[\s\S]*cursor: pointer;/, 'Clickable hero offer cards must look and behave like clickable cards');
+assert.match(css, /\.hero-offer-card:focus-visible \{[\s\S]*outline: 3px solid #F59E0B;/, 'Clickable hero offer cards must have a visible keyboard focus state');
 assert.match(css, /\.hero-offer-card__media \{[\s\S]*background: linear-gradient\(135deg, #1e3a5f/, 'Hero offer media frames must use site colors around the uploaded images');
 assert.match(css, /\.hero-offer-card__body \{[\s\S]*background: linear-gradient\(180deg, #FFFFFF/, 'Hero offer card text area must use a clean site-matched surface');
 assert.match(css, /\.hero-offer-card__body h2 \{[\s\S]*min-height: 2\.4em;/, 'Hero offer titles must reserve stable space for phone text wrapping');

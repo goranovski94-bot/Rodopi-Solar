@@ -76,7 +76,7 @@
   <g class="free-install-badge" transform="translate(24 228)">
     <rect width="320" height="96" rx="30" fill="#F4C461" opacity=".98"/>
     <rect x="9" y="9" width="302" height="78" rx="24" fill="none" stroke="#FFFFFF" stroke-width="5" opacity=".76"/>
-    <text x="160" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" font-weight="900" fill="#0F172A">БЕЗПЛАТЕН</text>
-    <text x="160" y="76" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="900" fill="#0F172A">МОНТАЖ</text>
+    <text x="160" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" font-weight="900" fill="#064E3B">БЕЗПЛАТЕН</text>
+    <text x="160" y="76" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="900" fill="#064E3B">МОНТАЖ</text>
   </g>
 </svg>
