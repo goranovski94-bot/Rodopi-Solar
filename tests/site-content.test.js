@@ -18,6 +18,16 @@ function assertIncludes(value, message) {
   assert.ok(normalizedText.includes(value) || html.includes(value), message);
 }
 
+const anchorHrefs = [...html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
+anchorHrefs.forEach((href) => {
+  assert.notStrictEqual(href, '#', 'Clickable links must not point to an empty # target');
+  assert.notStrictEqual(href, 'index.html', 'Logo/home links must scroll to #home instead of reloading index.html');
+  if (href.startsWith('#')) {
+    const id = href.slice(1);
+    assert.match(html, new RegExp(`id="${id}"`), `Internal link must point to an existing section: ${href}`);
+  }
+});
+
 [
   'Системи за дома',
   'Трифазни инвертори',
@@ -68,6 +78,11 @@ assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.hero__slide--3 \{[\s\S]*b
   assert.ok(heroMatch[1].includes(src), `Hero offer must use corrected generated banner: ${src}`);
   const assetText = fs.readFileSync(path.join(__dirname, '..', src), 'utf8');
   assert.ok(!assetText.includes('€'), `Corrected generated banner must not contain an in-image price: ${src}`);
+  assert.ok(!assetText.includes('N-Type'), `Offer banner must replace N-Type with the free installation badge: ${src}`);
+  assert.ok(assetText.includes('\u0411\u0415\u0417\u041f\u041b\u0410\u0422\u0415\u041d'), `Offer banner must show the free installation badge clearly: ${src}`);
+  assert.ok(assetText.includes('\u041c\u041e\u041d\u0422\u0410\u0416'), `Offer banner must show installation text clearly: ${src}`);
+  assert.ok(assetText.includes('width="320" height="96"'), `Offer banner free installation badge must be large enough to read: ${src}`);
+  assert.ok(assetText.includes('font-size="34"'), `Offer banner installation line must be visually emphasized: ${src}`);
   assert.ok(assetText.includes('class="offer-grass"'), `Offer banner must include a visible grass base: ${src}`);
   assert.ok(assetText.includes('class="solar-module"'), `Offer banner must include prominent realistic solar modules: ${src}`);
   assert.ok(assetText.includes('class="hero-product"'), `Offer banner must make inverter and battery visually prominent: ${src}`);
