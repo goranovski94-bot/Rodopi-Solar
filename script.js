@@ -151,6 +151,13 @@
     const target = document.querySelector(hash);
     if (!target) return false;
 
+    document.querySelectorAll('.hero-offer-card.is-targeted').forEach(function (card) {
+      card.classList.remove('is-targeted');
+    });
+    if (target.classList.contains('hero-offer-card')) {
+      target.classList.add('is-targeted');
+    }
+
     const headerOffset = header ? header.offsetHeight + 12 : 0;
     const targetTop = Math.max(target.getBoundingClientRect().top + window.scrollY - headerOffset, 0);
 

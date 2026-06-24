@@ -59,8 +59,9 @@ assert.ok(heroMatch, 'Hero section must exist');
 assert.ok(heroMatch[1].includes('class="hero-offers"'), 'Hero must include the offer-card grid');
 assert.ok(heroMatch[1].includes('id="system-offers"'), 'Hero offer grid must have a direct anchor for product navigation');
 assert.ok(heroMatch[1].includes('class="btn btn--primary"'), 'Free consultation button must remain in the hero');
-assert.strictEqual((heroMatch[1].match(/<a href="#consult" class="hero-offer-card"/g) || []).length, 8, 'Each hero offer card must be clickable and lead to free consultation');
-assert.strictEqual((heroMatch[1].match(/class="hero-offer-card__install-badge"/g) || []).length, 8, 'Each hero offer card must have a hover-emphasized free installation badge');
+assert.strictEqual((heroMatch[1].match(/<a href="#consult"(?: id="[^"]+")? class="hero-offer-card"/g) || []).length, 8, 'Each hero offer card must be clickable and lead to free consultation');
+assert.strictEqual((heroMatch[1].match(/БЕЗПЛАТЕН/g) || []).length, 0, 'Hero must not duplicate the free installation badge outside the SVG offer banners');
+assert.ok(!heroMatch[1].includes('hero-offer-card__install-badge'), 'Hero offer cards must not add a second free installation badge over the SVG banner');
 assert.ok(!heroMatch[1].includes('<article class="hero-offer-card">'), 'Hero offer cards must not be non-clickable article cards');
 assert.ok(!heroMatch[1].includes('Базови'), 'Hero offers must not use the "Базови" label');
 assert.ok(!heroMatch[1].includes('hero-offer-card__specs'), 'Hero offer images must not use overlay labels on top of the bitmap');
@@ -154,8 +155,9 @@ assert.ok(!systemPackagesMatch[1].includes('лв.'), 'System package prices must
   /<a href="#portfolio" class="quick-link">Портфолио<\/a>/,
   /<button type="button" class="theme-toggle" id="themeToggle" aria-label="Смени тъмен и светъл режим" aria-pressed="false">/,
   /<li class="nav__item"><a href="#footer-contact">Контакти<\/a><\/li>/,
-  /<a href="#systems" class="btn btn--primary btn--sm">РАЗГЛЕДАЙ ТУК<\/a>/,
+  /<a href="#offer-10kw-deye" class="btn btn--primary btn--sm">РАЗГЛЕДАЙ ТУК<\/a>/,
 ].forEach((pattern) => assert.match(html, pattern));
+assert.match(heroMatch[1], /<a href="#consult" id="offer-10kw-deye" class="hero-offer-card"[^>]*>[\s\S]*Монофазна ФЕЦ система 10kW \+ Батерия Deye 16kWh/, 'Best-selling banner must target and mark the 10kW Deye offer card directly');
 
 const headerMatch = html.match(/<header class="header" id="header">([\s\S]*?)<\/header>/);
 assert.ok(headerMatch, 'Header must exist');
@@ -205,8 +207,7 @@ assert.doesNotMatch(css, /@keyframes\s+(offerCardFloat|priceBadgePop|offerCardEn
 assert.doesNotMatch(css, /\.hero-offer-card(?:__body p)?\s*\{[\s\S]*?animation:/, 'Hero offer cards and prices must stay static for smooth scrolling');
 assert.match(css, /\.hero-offer-card__body p \{[\s\S]*background: #F4C461;[\s\S]*box-shadow:/, 'Hero offer prices must be prominent without animation');
 assert.match(css, /\.hero-offer-card:hover \.hero-offer-card__body p/, 'Hero offer prices must have a non-continuous hover emphasis');
-assert.match(css, /\.hero-offer-card__install-badge \{[\s\S]*background: #F4C461;[\s\S]*color: #064E3B;/, 'Free installation badge must be readable and site-colored');
-assert.match(css, /\.hero-offer-card:hover \.hero-offer-card__install-badge,[\s\S]*\.hero-offer-card:focus-within \.hero-offer-card__install-badge \{[\s\S]*background: #F59E0B;[\s\S]*transform: translateY\(-1px\);/, 'Free installation badge must be emphasized when the offer card is highlighted');
+assert.match(css, /\.hero-offer-card:hover \.hero-offer-card__media,[\s\S]*\.hero-offer-card:focus-within \.hero-offer-card__media,[\s\S]*\.hero-offer-card:target \.hero-offer-card__media,[\s\S]*\.hero-offer-card\.is-targeted \.hero-offer-card__media \{[\s\S]*border-color: #F59E0B;[\s\S]*box-shadow:/, 'Offer banner media must be emphasized on card hover without duplicating the free installation text');
 assert.doesNotMatch(css, /\.benefit-card:hover/, 'Service benefit cards must remain static and not highlight on hover');
 assert.match(css, /\.benefit-card \{[\s\S]*transition: none;/, 'Service benefit cards must not animate on hover or touch');
 assert.ok(!js.includes('.benefit-card, .catalog-card'), 'Service benefit cards must not receive scroll animation classes');
@@ -214,6 +215,9 @@ assert.match(css, /\.hero-offers \{[\s\S]*grid-auto-rows: 1fr;/, 'Hero offers mu
 assert.match(css, /\.hero-offer-card \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'Hero offer cards must use a stable vertical layout');
 assert.match(css, /\.hero-offer-card \{[\s\S]*text-decoration: none;[\s\S]*cursor: pointer;/, 'Clickable hero offer cards must look and behave like clickable cards');
 assert.match(css, /\.hero-offer-card:focus-visible \{[\s\S]*outline: 3px solid #F59E0B;/, 'Clickable hero offer cards must have a visible keyboard focus state');
+assert.match(css, /\.hero-offer-card:target,[\s\S]*\.hero-offer-card\.is-targeted \{[\s\S]*outline: 3px solid #F59E0B;[\s\S]*box-shadow:/, 'Targeted best-selling offer card must be visibly marked after clicking the banner');
+assert.match(js, /document\.querySelectorAll\('\.hero-offer-card\.is-targeted'\)[\s\S]*classList\.remove\('is-targeted'\)/, 'Script must clear previous targeted offer highlights');
+assert.match(js, /target\.classList\.contains\('hero-offer-card'\)[\s\S]*target\.classList\.add\('is-targeted'\)/, 'Script must mark the targeted offer card after internal navigation');
 assert.match(css, /\.hero-offer-card__media \{[\s\S]*background: linear-gradient\(135deg, #1e3a5f/, 'Hero offer media frames must use site colors around the uploaded images');
 assert.match(css, /\.hero-offer-card__body \{[\s\S]*background: linear-gradient\(180deg, #FFFFFF/, 'Hero offer card text area must use a clean site-matched surface');
 assert.match(css, /\.hero-offer-card__body h2 \{[\s\S]*min-height: 2\.4em;/, 'Hero offer titles must reserve stable space for phone text wrapping');
