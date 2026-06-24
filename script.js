@@ -513,7 +513,7 @@
 
   /* ---- Intersection Observer – fade-in on scroll ---- */
   const animatedElements = document.querySelectorAll(
-    '.benefit-card, .catalog-card, .portfolio-item, .why-solar__image, .why-solar__text'
+    '.catalog-card, .portfolio-item, .why-solar__image, .why-solar__text'
   );
 
   if (animatedElements.length) {

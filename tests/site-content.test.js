@@ -60,6 +60,7 @@ assert.ok(heroMatch[1].includes('class="hero-offers"'), 'Hero must include the o
 assert.ok(heroMatch[1].includes('id="system-offers"'), 'Hero offer grid must have a direct anchor for product navigation');
 assert.ok(heroMatch[1].includes('class="btn btn--primary"'), 'Free consultation button must remain in the hero');
 assert.strictEqual((heroMatch[1].match(/<a href="#consult" class="hero-offer-card"/g) || []).length, 8, 'Each hero offer card must be clickable and lead to free consultation');
+assert.strictEqual((heroMatch[1].match(/class="hero-offer-card__install-badge"/g) || []).length, 8, 'Each hero offer card must have a hover-emphasized free installation badge');
 assert.ok(!heroMatch[1].includes('<article class="hero-offer-card">'), 'Hero offer cards must not be non-clickable article cards');
 assert.ok(!heroMatch[1].includes('Базови'), 'Hero offers must not use the "Базови" label');
 assert.ok(!heroMatch[1].includes('hero-offer-card__specs'), 'Hero offer images must not use overlay labels on top of the bitmap');
@@ -204,6 +205,11 @@ assert.doesNotMatch(css, /@keyframes\s+(offerCardFloat|priceBadgePop|offerCardEn
 assert.doesNotMatch(css, /\.hero-offer-card(?:__body p)?\s*\{[\s\S]*?animation:/, 'Hero offer cards and prices must stay static for smooth scrolling');
 assert.match(css, /\.hero-offer-card__body p \{[\s\S]*background: #F4C461;[\s\S]*box-shadow:/, 'Hero offer prices must be prominent without animation');
 assert.match(css, /\.hero-offer-card:hover \.hero-offer-card__body p/, 'Hero offer prices must have a non-continuous hover emphasis');
+assert.match(css, /\.hero-offer-card__install-badge \{[\s\S]*background: #F4C461;[\s\S]*color: #064E3B;/, 'Free installation badge must be readable and site-colored');
+assert.match(css, /\.hero-offer-card:hover \.hero-offer-card__install-badge,[\s\S]*\.hero-offer-card:focus-within \.hero-offer-card__install-badge \{[\s\S]*background: #F59E0B;[\s\S]*transform: translateY\(-1px\);/, 'Free installation badge must be emphasized when the offer card is highlighted');
+assert.doesNotMatch(css, /\.benefit-card:hover/, 'Service benefit cards must remain static and not highlight on hover');
+assert.match(css, /\.benefit-card \{[\s\S]*transition: none;/, 'Service benefit cards must not animate on hover or touch');
+assert.ok(!js.includes('.benefit-card, .catalog-card'), 'Service benefit cards must not receive scroll animation classes');
 assert.match(css, /\.hero-offers \{[\s\S]*grid-auto-rows: 1fr;/, 'Hero offers must keep cards evenly aligned across rows');
 assert.match(css, /\.hero-offer-card \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'Hero offer cards must use a stable vertical layout');
 assert.match(css, /\.hero-offer-card \{[\s\S]*text-decoration: none;[\s\S]*cursor: pointer;/, 'Clickable hero offer cards must look and behave like clickable cards');

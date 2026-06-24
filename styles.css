@@ -767,6 +767,41 @@ textarea:focus-visible {
   background: #0f5132;
 }
 
+.hero-offer-card__install-badge {
+  position: absolute;
+  left: 4.2%;
+  top: 36.5%;
+  width: min(38%, 9.4rem);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .02rem;
+  padding: .22rem .32rem;
+  border: 2px solid rgba(255,255,255,.72);
+  border-radius: 8px;
+  background: #F4C461;
+  color: #064E3B;
+  font-size: clamp(.46rem, .66vw, .66rem);
+  line-height: 1;
+  font-weight: 900;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(15,23,42,.20), inset 0 1px 0 rgba(255,255,255,.58);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  pointer-events: none;
+}
+
+.hero-offer-card__install-badge strong {
+  font-size: 1.08em;
+}
+
+.hero-offer-card:hover .hero-offer-card__install-badge,
+.hero-offer-card:focus-within .hero-offer-card__install-badge {
+  background: #F59E0B;
+  box-shadow: 0 13px 28px rgba(245,158,11,.36), inset 0 1px 0 rgba(255,255,255,.62);
+  transform: translateY(-1px);
+}
+
 .hero-offer-card__body {
   padding: .72rem .72rem .85rem;
   display: flex;
@@ -901,9 +936,8 @@ textarea:focus-visible {
   border-radius: var(--radius);
   padding: 2rem 1.5rem;
   border: 1px solid var(--border);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: none;
 }
-.benefit-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
 .benefit-card__icon {
   width: 52px; height: 52px;
