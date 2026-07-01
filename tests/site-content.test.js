@@ -232,6 +232,7 @@ assert.ok(phoneHeroOffersMatch[1].includes('grid-template-columns: 1fr;'), 'Phon
 assert.match(css, /\.system-packages article \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'System package cards must keep price aligned on desktop and mobile');
 assert.match(css, /\.catalog__banner \{[\s\S]*color: #FFFFFF;/, 'Best-selling catalog banner must stay readable in dark mode');
 assert.match(css, /\.consult-cta \{[\s\S]*color: #FFFFFF;/, 'Consult section text must stay readable in dark mode');
+assert.match(css, /\.section \{[\s\S]*scroll-margin-top: calc\(var\(--header-h\) \+ 1rem\);/, 'Sections must open below the fixed header when reached from navigation');
 assert.match(css, /\.consult-cta__text h2 \{[\s\S]*color: #FFFFFF;/, 'Consult heading must stay readable in dark mode');
 assert.match(css, /\.consult-contact h3 \{[\s\S]*color: #FFFFFF;/, 'Consult contact heading must stay readable in dark mode');
 assert.match(css, /:root\[data-theme="dark"\] \.quick-link--products,[\s\S]*color: #0F172A;/, 'Products pill text must stay readable on orange in dark mode');
@@ -272,7 +273,16 @@ assert.ok(portfolioMatch, 'Portfolio section must exist');
 assert.ok(!portfolioMatch[1].includes('images.unsplash.com'), 'Portfolio must use local suitable project images');
 assert.ok(!portfolioMatch[1].includes('assets/products/'), 'Portfolio must not reuse product images');
 const portfolioImageSources = [...portfolioMatch[1].matchAll(/<img src="([^"]+)"/g)].map((match) => match[1]);
-assert.ok(portfolioImageSources.length >= 9, 'Portfolio should show a complete gallery of project images');
+const expectedPortfolioSources = [
+  'assets/portfolio/rodopi-portfolio-01-residential-roof.jpg',
+  'assets/portfolio/rodopi-portfolio-02-home-roof-panels.jpg',
+  'assets/portfolio/rodopi-portfolio-03-deye-inverter-battery.jpg',
+  'assets/portfolio/rodopi-portfolio-04-industrial-roof-array.jpg',
+  'assets/portfolio/rodopi-portfolio-05-deye-storage-system.jpg',
+  'assets/portfolio/rodopi-portfolio-06-ridge-roof-panels.jpg',
+  'assets/portfolio/rodopi-portfolio-07-deye-inverter-storage.jpg',
+];
+assert.deepStrictEqual(portfolioImageSources, expectedPortfolioSources, 'Portfolio must use the client-provided images in the requested order');
 assert.strictEqual(
   new Set(portfolioImageSources).size,
   portfolioImageSources.length,
@@ -280,21 +290,7 @@ assert.strictEqual(
 );
 portfolioImageSources.forEach((src) => {
   assert.ok(src.startsWith('assets/portfolio/'), `Portfolio image must come from assets/portfolio: ${src}`);
-});
-[
-  'assets/portfolio/solar-portfolio-18kw.jpg',
-  'assets/portfolio/solar-portfolio-12kw-roof.jpg',
-  'assets/portfolio/solar-portfolio-15kw.jpg',
-  'assets/portfolio/solar-portfolio-bright-field.jpg',
-  'assets/portfolio/solar-portfolio-field-closeup.jpg',
-  'assets/portfolio/solar-portfolio-flat-roof.jpg',
-  'assets/portfolio/solar-portfolio-home-roof.jpg',
-  'assets/portfolio/solar-portfolio-aerial-panel-rows.jpg',
-  'assets/portfolio/solar-portfolio-field-array.jpg',
-  'assets/portfolio/solar-portfolio-residential-roof.jpg',
-  'assets/portfolio/solar-portfolio-sunset-roof.jpg',
-].forEach((src) => {
-  assert.ok(portfolioMatch[1].includes(src), `Missing local portfolio image: ${src}`);
+  assert.ok(fs.existsSync(path.join(__dirname, '..', src)), `Portfolio image file must exist: ${src}`);
 });
 assert.ok(
   !/portfolio\/[^"]*(worker|installer|people|person|human)[^"]*\.(jpg|png|webp)/i.test(portfolioMatch[1]),
