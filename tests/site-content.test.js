@@ -292,6 +292,19 @@ portfolioImageSources.forEach((src) => {
   assert.ok(src.startsWith('assets/portfolio/'), `Portfolio image must come from assets/portfolio: ${src}`);
   assert.ok(fs.existsSync(path.join(__dirname, '..', src)), `Portfolio image file must exist: ${src}`);
 });
+[
+  'assets/portfolio/rodopi-portfolio-03-deye-inverter-battery.jpg',
+  'assets/portfolio/rodopi-portfolio-07-deye-inverter-storage.jpg',
+].forEach((src) => {
+  assert.match(
+    portfolioMatch[1],
+    new RegExp(`<div class="portfolio-item portfolio-item--contain">\\s*<img src="${src.replace(/\//g, '\\/')}"`),
+    `Vertical Deye portfolio image must use a contain card so it is visible fully: ${src}`
+  );
+});
+assert.match(css, /\.portfolio-item--contain img \{[\s\S]*object-fit: contain;[\s\S]*background:/, 'Vertical portfolio images must use contain fit with a stable background');
+assert.match(css, /\.portfolio-item--contain:hover img \{[\s\S]*transform: none;/, 'Contain portfolio images must not zoom and crop on hover');
+assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.portfolio-item--contain img \{[\s\S]*height: 440px;/, 'Vertical portfolio images must stay tall enough to show fully on phones');
 assert.ok(
   !/portfolio\/[^"]*(worker|installer|people|person|human)[^"]*\.(jpg|png|webp)/i.test(portfolioMatch[1]),
   'Portfolio images must not include people-focused filenames'

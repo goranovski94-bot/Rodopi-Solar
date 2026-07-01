@@ -1315,8 +1315,16 @@ textarea:focus-visible {
   object-fit: contain;
   padding: 1rem;
 }
+.portfolio-item--contain img {
+  height: 320px;
+  object-fit: contain;
+  background:
+    radial-gradient(circle at center, rgba(245,158,11,.1), transparent 58%),
+    linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+}
 .portfolio-item--featured img { height: 100%; min-height: 400px; }
 .portfolio-item:hover img { transform: scale(1.05); }
+.portfolio-item--contain:hover img { transform: none; }
 
 .portfolio-item__info {
   position: absolute;
@@ -1758,6 +1766,7 @@ textarea:focus-visible {
   .product-detail__media img { min-height: 220px; }
   .portfolio__grid { grid-template-columns: 1fr 1fr; }
   .portfolio-item__info { transform: translateY(0); }
+  .portfolio-item--contain img { height: 440px; }
   .manufacturers__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .portfolio-item--featured { grid-column: span 2; }
 
