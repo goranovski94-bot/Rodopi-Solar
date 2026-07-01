@@ -1794,6 +1794,7 @@ textarea:focus-visible {
   .hero__slide { padding: 1rem 0 1.35rem; }
   .hero-offers {
     gap: .62rem;
+    grid-template-columns: 1fr;
   }
   .hero-offer-card img {
     aspect-ratio: 1 / .68;

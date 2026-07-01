@@ -5,6 +5,7 @@ const path = require('path');
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const css = fs.readFileSync(path.join(__dirname, '..', 'styles.css'), 'utf8');
 const js = fs.readFileSync(path.join(__dirname, '..', 'script.js'), 'utf8');
+assert.ok(html.includes('<link rel="icon" type="image/webp" href="assets/rodopi-solar-logo-cropped.webp" />'), 'Site must declare a local favicon to avoid browser 404s');
 const normalizedText = html
   .replace(/<[^>]+>/g, ' ')
   .replace(/\s+/g, ' ')
@@ -85,8 +86,10 @@ assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.hero__slide--3 \{[\s\S]*b
   assert.ok(!assetText.includes('N-Type'), `Offer banner must replace N-Type with the free installation badge: ${src}`);
   assert.ok(assetText.includes('\u0411\u0415\u0417\u041f\u041b\u0410\u0422\u0415\u041d'), `Offer banner must show the free installation badge clearly: ${src}`);
   assert.ok(assetText.includes('\u041c\u041e\u041d\u0422\u0410\u0416'), `Offer banner must show installation text clearly: ${src}`);
-  assert.ok(assetText.includes('fill="#064E3B">\u0411\u0415\u0417\u041f\u041b\u0410\u0422\u0415\u041d'), `Offer banner free installation badge must use a site-matched green text color: ${src}`);
-  assert.ok(assetText.includes('fill="#064E3B">\u041c\u041e\u041d\u0422\u0410\u0416'), `Offer banner installation text must use a site-matched green text color: ${src}`);
+  assert.ok(assetText.includes('fill="#052E16"'), `Offer banner free installation badge must use a dark green contrast background: ${src}`);
+  assert.ok(assetText.includes('stroke="#39FF14"'), `Offer banner free installation badge must keep an electric green border: ${src}`);
+  assert.ok(assetText.includes('fill="#39FF14">\u0411\u0415\u0417\u041f\u041b\u0410\u0422\u0415\u041d'), `Offer banner free installation text must be electric green: ${src}`);
+  assert.ok(assetText.includes('fill="#39FF14">\u041c\u041e\u041d\u0422\u0410\u0416'), `Offer banner installation text must be electric green: ${src}`);
   assert.ok(assetText.includes('width="320" height="96"'), `Offer banner free installation badge must be large enough to read: ${src}`);
   assert.ok(assetText.includes('font-size="34"'), `Offer banner installation line must be visually emphasized: ${src}`);
   assert.ok(assetText.includes('class="offer-grass"'), `Offer banner must include a visible grass base: ${src}`);
@@ -223,6 +226,9 @@ assert.match(css, /\.hero-offer-card__body \{[\s\S]*background: linear-gradient\
 assert.match(css, /\.hero-offer-card__body h2 \{[\s\S]*min-height: 2\.4em;/, 'Hero offer titles must reserve stable space for phone text wrapping');
 assert.match(css, /\.hero-offer-card__body p \{[\s\S]*background: #F4C461;[\s\S]*color: #0F172A;/, 'Hero offer prices must use a strong static gold badge');
 assert.match(css, /\.system-packages__price \{[\s\S]*background: #F4C461;[\s\S]*color: #0F172A;/, 'System package prices must use a prominent static gold badge');
+const phoneHeroOffersMatch = css.match(/@media \(max-width: 480px\)[\s\S]*?\.hero-offers \{([\s\S]*?)\n  \}/);
+assert.ok(phoneHeroOffersMatch, 'Phone hero offer CSS block must exist');
+assert.ok(phoneHeroOffersMatch[1].includes('grid-template-columns: 1fr;'), 'Phone offer cards must use one column so the free installation banner remains readable');
 assert.match(css, /\.system-packages article \{[\s\S]*display: flex;[\s\S]*flex-direction: column;/, 'System package cards must keep price aligned on desktop and mobile');
 assert.match(css, /\.catalog__banner \{[\s\S]*color: #FFFFFF;/, 'Best-selling catalog banner must stay readable in dark mode');
 assert.match(css, /\.consult-cta \{[\s\S]*color: #FFFFFF;/, 'Consult section text must stay readable in dark mode');
