@@ -1284,22 +1284,23 @@ textarea:focus-visible {
 }
 
 .portfolio__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
-  gap: 1rem;
+  column-count: 3;
+  column-gap: 1rem;
 }
 .portfolio-item--featured {
-  grid-column: span 2;
-  grid-row: span 2;
+  column-span: all;
+  margin-bottom: 1rem;
 }
 
 .portfolio-item {
+  display: block;
   position: relative;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
   cursor: pointer;
+  break-inside: avoid;
+  margin-bottom: 1rem;
 }
 .portfolio-item img {
   width: 100%;
@@ -1315,16 +1316,21 @@ textarea:focus-visible {
   object-fit: contain;
   padding: 1rem;
 }
-.portfolio-item--contain img {
-  height: 320px;
+.portfolio-item--contain img,
+.portfolio-item--full-fit img {
+  height: auto;
   object-fit: contain;
-  background:
-    radial-gradient(circle at center, rgba(245,158,11,.1), transparent 58%),
-    linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  background: transparent;
+}
+.portfolio-item--contain,
+.portfolio-item--full-fit {
+  align-self: start;
+  background: transparent;
 }
 .portfolio-item--featured img { height: 100%; min-height: 400px; }
 .portfolio-item:hover img { transform: scale(1.05); }
-.portfolio-item--contain:hover img { transform: none; }
+.portfolio-item--contain:hover img,
+.portfolio-item--full-fit:hover img { transform: none; }
 
 .portfolio-item__info {
   position: absolute;
@@ -1549,8 +1555,7 @@ textarea:focus-visible {
   .system-packages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .manufacturers__logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .consult-cta__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .portfolio__grid { grid-template-columns: repeat(3, 1fr); }
-  .portfolio-item--featured { grid-column: span 3; }
+  .portfolio__grid { column-count: 3; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1764,11 +1769,9 @@ textarea:focus-visible {
   }
   .product-detail__body:only-child { grid-column: 1; }
   .product-detail__media img { min-height: 220px; }
-  .portfolio__grid { grid-template-columns: 1fr 1fr; }
+  .portfolio__grid { column-count: 2; }
   .portfolio-item__info { transform: translateY(0); }
-  .portfolio-item--contain img { height: 440px; }
   .manufacturers__logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .portfolio-item--featured { grid-column: span 2; }
 
   .hero__controls { bottom: 1.1rem; }
 
@@ -1861,9 +1864,8 @@ textarea:focus-visible {
   .catalog__grid { grid-template-columns: 1fr; }
   .brand-pills,
   .system-packages { grid-template-columns: 1fr; }
-  .portfolio__grid { grid-template-columns: 1fr; }
+  .portfolio__grid { column-count: 1; }
   .manufacturers__logos { grid-template-columns: 1fr; }
-  .portfolio-item--featured { grid-column: 1; }
   .cookie-banner.show ~ .scroll-top { bottom: calc(7.25rem + env(safe-area-inset-bottom)); }
   .footer__contact-link {
     width: calc(100% - 4.8rem);

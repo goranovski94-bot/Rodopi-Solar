@@ -60,7 +60,7 @@ assert.ok(heroMatch, 'Hero section must exist');
 assert.ok(heroMatch[1].includes('class="hero-offers"'), 'Hero must include the offer-card grid');
 assert.ok(heroMatch[1].includes('id="system-offers"'), 'Hero offer grid must have a direct anchor for product navigation');
 assert.ok(heroMatch[1].includes('class="btn btn--primary"'), 'Free consultation button must remain in the hero');
-assert.strictEqual((heroMatch[1].match(/<a href="#consult"(?: id="[^"]+")? class="hero-offer-card"/g) || []).length, 8, 'Each hero offer card must be clickable and lead to free consultation');
+assert.strictEqual((heroMatch[1].match(/<a href="#consult"(?: id="[^"]+")? class="hero-offer-card"/g) || []).length, 5, 'Each visible hero offer card must be clickable and lead to free consultation');
 assert.strictEqual((heroMatch[1].match(/БЕЗПЛАТЕН/g) || []).length, 0, 'Hero must not duplicate the free installation badge outside the SVG offer banners');
 assert.ok(!heroMatch[1].includes('hero-offer-card__install-badge'), 'Hero offer cards must not add a second free installation badge over the SVG banner');
 assert.ok(!heroMatch[1].includes('<article class="hero-offer-card">'), 'Hero offer cards must not be non-clickable article cards');
@@ -71,14 +71,11 @@ assert.match(css, /\.hero__slide--3 \{[\s\S]*background-image: url\('assets\/por
 assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets/portfolio/solar-portfolio-aerial-panel-rows-mobile.jpg')), 'Mobile hero offer background must have an optimized local panel-and-grass image');
 assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.hero__slide--3 \{[\s\S]*background-image: url\('assets\/portfolio\/solar-portfolio-aerial-panel-rows-mobile\.jpg'\);[\s\S]*background-position: center top;/, 'Mobile hero offer background must keep panels and grass visible without a blurry crop');
 [
-  'assets/products/offer-card-6kw-deye.svg',
   'assets/products/offer-card-8kw-deye.svg',
   'assets/products/offer-card-10kw-deye.svg',
-  'assets/products/offer-card-10kw-dyness.svg',
   'assets/products/offer-card-12kw-deye.svg',
   'assets/products/offer-card-15kw-deye.svg',
   'assets/products/offer-card-20kw-deye.svg',
-  'assets/products/offer-card-20kw-dyness.svg',
 ].forEach((src) => {
   assert.ok(heroMatch[1].includes(src), `Hero offer must use corrected generated banner: ${src}`);
   const assetText = fs.readFileSync(path.join(__dirname, '..', src), 'utf8');
@@ -102,16 +99,23 @@ assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.hero__slide--3 \{[\s\S]*b
   assert.ok(!assetText.includes('<filter'), `Offer banner must avoid SVG filters for smooth rendering: ${src}`);
   assert.ok(!assetText.includes('cx="752" cy="112"'), `Offer banner must not show a decorative dot next to the brand title: ${src}`);
 });
+[
+  'assets/products/offer-card-6kw-deye.svg',
+  'assets/products/offer-card-10kw-dyness.svg',
+  'assets/products/offer-card-20kw-dyness.svg',
+  'Монофазна ФЕЦ система 6kW + Батерия Deye 16kWh',
+  'Монофазна ФЕЦ система 10kW + Батерия Dyness 14.3kWh',
+  'Трифазна ФЕЦ система 20kW + Батерия Dyness 14.3kWh',
+].forEach((removedOffer) => {
+  assert.ok(!heroMatch[1].includes(removedOffer), `Removed offer must not be visible in hero: ${removedOffer}`);
+});
 assert.ok(!heroMatch[1].includes('assets/products/hero-offer-'), 'Hero offers must not use old bitmap banners with conflicting in-image text');
 [
-  ['Монофазна ФЕЦ система 6kW + Батерия Deye 16kWh', '4 499,00 €'],
-  ['Монофазна ФЕЦ система 8kW + Батерия Deye 16kWh', '5 199,00 €'],
-  ['Монофазна ФЕЦ система 10kW + Батерия Deye 16kWh', '5 449,00 €'],
-  ['Монофазна ФЕЦ система 10kW + Батерия Dyness 14.3kWh', '5 540,00 €'],
-  ['Трифазна ФЕЦ система 12kW + Батерия Deye 16kWh', '6 299,00 €'],
-  ['Трифазна ФЕЦ система 15kW + Батерия Deye 16kWh', '7 099,00 €'],
-  ['Трифазна ФЕЦ система 20kW + Батерия Deye 16kWh', '8 295,00 €'],
-  ['Трифазна ФЕЦ система 20kW + Батерия Dyness 14.3kWh', '8 395,00 €'],
+  ['Монофазна ФЕЦ система 8kW + Батерия Deye 16kWh', '7 100 €'],
+  ['Монофазна ФЕЦ система 10kW + Батерия Deye 16kWh', '9 100 €'],
+  ['Трифазна ФЕЦ система 12kW + Батерия Deye 16kWh', '11 000 €'],
+  ['Трифазна ФЕЦ система 15kW + Батерия Deye 16kWh', '13 500 €'],
+  ['Трифазна ФЕЦ система 20kW + Батерия Deye 16kWh', '16 000 €'],
 ].forEach(([title, price]) => {
   assert.ok(heroMatch[1].includes(title), `Missing hero offer title: ${title}`);
   assert.ok(heroMatch[1].includes(price), `Missing hero offer price: ${price}`);
@@ -132,22 +136,22 @@ assert.ok(!heroMatch[1].includes('лв.'), 'Hero offer prices must be shown only
   'GCL Solar',
 ].forEach((required) => assertIncludes(required, `Missing required content: ${required}`));
 
-['6 kW', '8 kW', '10 kW', '12 kW', '15 kW', '20 kW'].forEach((size) => {
+['8 kW', '10 kW', '12 kW', '15 kW', '20 kW'].forEach((size) => {
   assertIncludes(size, `Missing hybrid system size: ${size}`);
 });
 
 const systemPackagesMatch = html.match(/<div class="system-packages">([\s\S]*?)<\/div>/);
 assert.ok(systemPackagesMatch, 'System packages grid must exist');
 [
-  'от 4 499,00 €',
-  'от 5 199,00 €',
-  'от 5 449,00 €',
-  'от 6 299,00 €',
-  'от 7 099,00 €',
-  'от 8 295,00 €',
+  'от 7 100 €',
+  'от 9 100 €',
+  'от 11 000 €',
+  'от 13 500 €',
+  'от 16 000 €',
 ].forEach((price) => {
   assert.ok(systemPackagesMatch[1].includes(price), `Missing system package price: ${price}`);
 });
+assert.ok(!systemPackagesMatch[1].includes('6 kW + батерия'), 'Removed 6 kW Deye system must not be visible in package list');
 assert.ok(!systemPackagesMatch[1].includes('лв.'), 'System package prices must be shown only in EUR');
 
 [
@@ -302,9 +306,17 @@ portfolioImageSources.forEach((src) => {
     `Vertical Deye portfolio image must use a contain card so it is visible fully: ${src}`
   );
 });
-assert.match(css, /\.portfolio-item--contain img \{[\s\S]*object-fit: contain;[\s\S]*background:/, 'Vertical portfolio images must use contain fit with a stable background');
-assert.match(css, /\.portfolio-item--contain:hover img \{[\s\S]*transform: none;/, 'Contain portfolio images must not zoom and crop on hover');
-assert.match(css, /@media \(max-width: 768px\)[\s\S]*\.portfolio-item--contain img \{[\s\S]*height: 440px;/, 'Vertical portfolio images must stay tall enough to show fully on phones');
+assert.match(css, /\.portfolio-item--contain img,[\s\S]*\.portfolio-item--full-fit img \{[\s\S]*height: auto;[\s\S]*object-fit: contain;[\s\S]*background: transparent;/, 'Contain portfolio images must show fully without blue side fields');
+assert.match(css, /\.portfolio__grid \{[\s\S]*column-count: 3;[\s\S]*column-gap: 1rem;/, 'Portfolio must use a masonry column layout without stretched blue fields');
+assert.match(css, /\.portfolio-item \{[\s\S]*break-inside: avoid;[\s\S]*margin-bottom: 1rem;/, 'Portfolio cards must avoid column breaks and keep clean spacing');
+assert.match(css, /\.portfolio-item--contain,[\s\S]*\.portfolio-item--full-fit \{[\s\S]*align-self: start;[\s\S]*background: transparent;/, 'Fit portfolio cards must size to the image instead of showing empty card background');
+assert.match(css, /\.portfolio-item--contain:hover img,[\s\S]*\.portfolio-item--full-fit:hover img \{[\s\S]*transform: none;/, 'Contain portfolio images must not zoom and crop on hover');
+assert.doesNotMatch(css, /@media \(max-width: 768px\)[\s\S]*\.portfolio-item--contain img \{[\s\S]*height: 440px;/, 'Vertical portfolio images must not be forced into a fixed blue-backed frame on phones');
+assert.match(
+  portfolioMatch[1],
+  /<div class="portfolio-item portfolio-item--full-fit">\s*<img src="assets\/portfolio\/rodopi-portfolio-06-ridge-roof-panels\.jpg"/,
+  'Replacement roof portfolio image must use full-fit mode so it remains visible fully'
+);
 assert.ok(
   !/portfolio\/[^"]*(worker|installer|people|person|human)[^"]*\.(jpg|png|webp)/i.test(portfolioMatch[1]),
   'Portfolio images must not include people-focused filenames'
